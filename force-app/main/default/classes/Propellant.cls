@@ -1,83 +1,63 @@
 public with sharing class Propellant {
-  private OnInsertBullet insertBullet;
-  private OnUpdateBullet updateBullet;
-  private OnDeleteBullet deleteBullet;
-  private OnUndeleteBullet undeleteBullet;
+  public OnBeforeBullet beforeBullet { get; private set; }
+  public OnAfterBullet afterBullet { get; private set; }
+  public Tank tank { get; private set; }
 
-  public Propellant(OnInsertBullet bullet) {
-    insertBullet = bullet;
+  public Propellant(OnBeforeBullet bullet) {
+    beforeBullet = bullet;
   }
 
-  public Propellant(OnUpdateBullet bullet) {
-    updateBullet = bullet;
+  public Propellant(OnAfterBullet bullet) {
+    afterBullet = bullet;
   }
 
-  public Propellant(OnDeleteBullet bullet) {
-    deleteBullet = bullet;
+  public Propellant(OnBeforeBullet beforeBullet, OnAfterBullet afterBullet) {
+    this.beforeBullet = beforeBullet;
+    this.afterBullet = afterBullet;
   }
 
-  public Propellant(OnUndeleteBullet bullet) {
-    undeleteBullet = bullet;
+  public Propellant(OnBeforeBullet bullet, Tank tank) {
+    this(bullet);
+    this.tank = tank;
   }
 
-  public void fireOff() {
-    if (canFireBeforeInsertBullet()) {
-      ((OnBeforeBullet)insertBullet).onBeforeRun();
-    } else if (canFireAfterInsertBullet()) {
-      ((OnAfterBullet)insertBullet).onAfterRun();
-    } else if (canFireBeforeUpdateBullet()) {
-      ((OnBeforeBullet)updateBullet).onBeforeRun();
-    } else if (canFireAfterUpdateBullet()) {
-      ((OnAfterBullet)updateBullet).onAfterRun();
-    } else if (canFireBeforeDeleteBullet()) {
-      ((OnBeforeBullet)deleteBullet).onBeforeRun();
-    } else if (canFireAfterDeleteBullet()) {
-      ((OnAfterBullet)deleteBullet).onAfterRun();
-    } else if (canFireAfterUndeleteBullet()) {
-      ((OnAfterBullet)undeleteBullet).onAfterRun();
+  public Propellant(OnAfterBullet bullet, Tank tank) {
+    this(bullet);
+    this.tank = tank;
+  }
+
+  public Propellant(OnBeforeBullet beforeBullet, OnAfterBullet afterBullet, Tank tank) {
+    this(beforeBullet, afterBullet);
+    this.tank = tank;
+  }
+
+  public Propellant fireOff() {
+    if (canFireBeforeBullet()) {
+      beforeBullet.onBeforeFire();
+      if (tank != null) {
+        return new Propellant(beforeBullet, tank.consume());
+      }
+    } else if (canFireAfterBullet()) {
+      afterBullet.onAfterFire();
+      if (tank != null) {
+        return new Propellant(afterBullet, tank.consume());
+      }
     }
+
+    return this;
   }
 
-  private Boolean canFireBeforeInsertBullet() {
+  private Boolean canFireBeforeBullet() {
     return Trigger.isExecuting &&
       Trigger.isBefore &&
-      Trigger.isInsert &&
-      insertBullet != null;
+      beforeBullet != null &&
+      ((Bullet)beforeBullet).canFire(Trigger.operationType, this);
   }
-  private Boolean canFireAfterInsertBullet() {
+
+  private Boolean canFireAfterBullet() {
     return Trigger.isExecuting &&
       Trigger.isAfter &&
-      Trigger.isInsert &&
-      insertBullet != null;
-  }
-  private Boolean canFireBeforeUpdateBullet() {
-    return Trigger.isExecuting &&
-      Trigger.isBefore &&
-      Trigger.isUpdate &&
-      updateBullet != null;
-  }
-  private Boolean canFireAfterUpdateBullet() {
-    return Trigger.isExecuting &&
-      Trigger.isAfter &&
-      Trigger.isUpdate &&
-      updateBullet != null;
-  }
-  private Boolean canFireBeforeDeleteBullet() {
-    return Trigger.isExecuting &&
-      Trigger.isBefore &&
-      Trigger.isDelete &&
-      deleteBullet != null;
-  }
-  private Boolean canFireAfterDeleteBullet() {
-    return Trigger.isExecuting &&
-      Trigger.isAfter &&
-      Trigger.isDelete &&
-      deleteBullet != null;
-  }
-  private Boolean canFireAfterUndeleteBullet() {
-    return Trigger.isExecuting &&
-      Trigger.isAfter &&
-      Trigger.isUndelete &&
-      undeleteBullet != null;
+      afterBullet != null &&
+      ((Bullet)beforeBullet).canFire(Trigger.operationType, this);
   }
 }
