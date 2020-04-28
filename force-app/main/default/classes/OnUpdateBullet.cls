@@ -1,13 +1,12 @@
 public abstract class OnUpdateBullet implements OnBeforeBullet, OnAfterBullet {
-  protected Set<SObject> newSet;
-  protected Set<SObject> oldSet;
-  protected Map<ID, SObject> newMap;
-  protected Map<ID, SObject> oldMap;
-  
-  @SuppressWarnings('PMD.EmptyStatementBlock') 
+  protected Set<SObject> newSet { get; private set; }
+  protected Set<SObject> oldSet { get; private set; }
+  protected Map<ID, SObject> newMap { get; private set; }
+  protected Map<ID, SObject> oldMap { get; private set; }
+
+  @SuppressWarnings('PMD.EmptyStatementBlock')
   private OnUpdateBullet() {
   }
-
   public OnUpdateBullet(Set<SObject> newSet) {
     this.newSet = newSet;
   }
@@ -21,5 +20,9 @@ public abstract class OnUpdateBullet implements OnBeforeBullet, OnAfterBullet {
   public OnUpdateBullet(Map<ID, SObject> newMap, Map<ID, SObject> oldMap) {
     this.newMap = newMap;
     this.oldMap = oldMap;
+  }
+  public virtual Boolean canFire(TriggerOperation triggerWhen, Propellant propellant) {
+    return triggerWhen == TriggerOperation.BEFORE_UPDATE ||
+      triggerWhen == TriggerOperation.AFTER_UPDATE;
   }
 }
