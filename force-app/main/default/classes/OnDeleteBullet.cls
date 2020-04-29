@@ -1,6 +1,6 @@
 public abstract class OnDeleteBullet implements OnBeforeBullet, OnAfterBullet {
-  protected Set<SObject> oldSet;
-  protected Map<ID, SObject> oldMap;
+  protected Set<SObject> oldSet { get; private set; }
+  protected Map<ID, SObject> oldMap { get; private set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
   private OnDeleteBullet() {
