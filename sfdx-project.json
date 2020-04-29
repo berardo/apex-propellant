@@ -1,11 +1,22 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "apex-propellant",
+            "versionName": "Version 1.0.0",
+            "versionNumber": "1.0.0.NEXT"
+        },
+        {
+            "path": "test",
+            "default": false
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "48.0",
+    "packageAliases": {
+        "apex-propellant": "0Ho6F000000GmscSAC",
+        "apex-propellant@1.0.0-1": "04t6F000004H9bvQAC"
     }
-  ],
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "48.0"
 }
