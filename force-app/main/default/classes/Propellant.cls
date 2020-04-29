@@ -3,6 +3,9 @@ public with sharing class Propellant {
   public OnAfterBullet afterBullet { get; private set; }
   public Tank tank { get; private set; }
 
+  @TestVisible
+  private Boolean skipForTestingPurposes = false;
+
   public Propellant(OnBeforeBullet bullet) {
     beforeBullet = bullet;
   }
@@ -34,10 +37,11 @@ public with sharing class Propellant {
   public Propellant fireOff() {
     if (canFireBeforeBullet()) {
       beforeBullet.onBeforeFire();
-      if (tank != null) {
+      if (tank != null && !canFireAfterBullet()) {
         return new Propellant(beforeBullet, tank.consume());
       }
-    } else if (canFireAfterBullet()) {
+    }
+    if (canFireAfterBullet()) {
       afterBullet.onAfterFire();
       if (tank != null) {
         return new Propellant(afterBullet, tank.consume());
@@ -48,16 +52,14 @@ public with sharing class Propellant {
   }
 
   private Boolean canFireBeforeBullet() {
-    return Trigger.isExecuting &&
-      Trigger.isBefore &&
-      beforeBullet != null &&
-      ((Bullet)beforeBullet).canFire(Trigger.operationType, this);
+    return beforeBullet != null &&
+      (Trigger.isExecuting && Trigger.isBefore && beforeBullet != null &&
+      ((Bullet) beforeBullet).canFire(Trigger.operationType, this) || skipForTestingPurposes);
   }
 
   private Boolean canFireAfterBullet() {
-    return Trigger.isExecuting &&
-      Trigger.isAfter &&
-      afterBullet != null &&
-      ((Bullet)beforeBullet).canFire(Trigger.operationType, this);
+    return afterBullet != null &&
+      (Trigger.isExecuting && Trigger.isAfter && afterBullet != null &&
+      ((Bullet) beforeBullet).canFire(Trigger.operationType, this) || skipForTestingPurposes);
   }
 }
