@@ -8,14 +8,14 @@ public abstract class OnUpdateBullet implements OnBeforeBullet, OnAfterBullet {
   private OnUpdateBullet() {
   }
   public OnUpdateBullet(Set<SObject> newSet) {
-    this.newSet = newSet;
+    this(newSet, null);
   }
   public OnUpdateBullet(Set<SObject> newSet, Set<SObject> oldSet) {
     this.newSet = newSet;
     this.oldSet = oldSet;
   }
   public OnUpdateBullet(Map<ID, SObject> newMap) {
-    this.newMap = newMap;
+    this(newMap, null);
   }
   public OnUpdateBullet(Map<ID, SObject> newMap, Map<ID, SObject> oldMap) {
     this.newMap = newMap;

@@ -7,30 +7,28 @@ public with sharing class Propellant {
   private Boolean skipForTestingPurposes = false;
 
   public Propellant(OnBeforeBullet bullet) {
-    beforeBullet = bullet;
+    this(bullet, null, null);
   }
 
   public Propellant(OnAfterBullet bullet) {
-    afterBullet = bullet;
+    this(null, bullet, null);
   }
 
   public Propellant(OnBeforeBullet beforeBullet, OnAfterBullet afterBullet) {
-    this.beforeBullet = beforeBullet;
-    this.afterBullet = afterBullet;
+    this(beforeBullet, afterBullet, null);
   }
 
   public Propellant(OnBeforeBullet bullet, Tank tank) {
-    this(bullet);
-    this.tank = tank;
+    this(bullet, null, tank);
   }
 
   public Propellant(OnAfterBullet bullet, Tank tank) {
-    this(bullet);
-    this.tank = tank;
+    this(null, bullet, tank);
   }
 
   public Propellant(OnBeforeBullet beforeBullet, OnAfterBullet afterBullet, Tank tank) {
-    this(beforeBullet, afterBullet);
+    this.beforeBullet = beforeBullet;
+    this.afterBullet = afterBullet;
     this.tank = tank;
   }
 
