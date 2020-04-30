@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>Apex Documentation</title>
+    <meta charset="UTF-8">
+    <script type="module" src="./assets/index.js"></script>
+    <script type="module" src="./assets/search-idx.js"></script>
+    <script type="module" src="./assets/search.js"></script>
+    <script charset="UTF-8" src="./assets/highlight.js"></script>
+    <script charset="UTF-8" src="./assets/mark.js"></script>
+    <script charset="UTF-8" src="./assets/lunr.js"></script>
+    <link rel="stylesheet" href="./assets/highlight.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/index.css" />
+    <link rel="shortcut icon" type="image/png" href="./assets/favicon.png" />
+  </head>
+
+  <body>
+    <div id="side-bar">
+
+      <div id="logo-container">
+        <div class="title">
+          Apex Documentation
+        </div>
+        <img src="assets/logo.png" />
+        <div class="subtitle">
+          Powered by <a target="_blank" rel="noopener noreferrer" href="https://github.com/no-stack-dub-sack/apexdox-vs-code">ApexDox VS Code</a>
+        </div>
+      </div>
+      <div id="search-wrapper">
+        <div class="search-icon"></div>
+        <input id="search-input" type="text" autocomplete="off" placeholder="Search...">
+      </div>
+      <ul id="search-results" class=""></ul>
+      <div class="navbar">
+        <nav role="navigation">
+          <a class="nav-header" id="home" href="javascript:void(0)" onclick="goToLocation('index.html');">
+            Home
+          </a>
+          <details id="Miscellaneous" class="group-name">
+            <summary id="header-Miscellaneous" class="nav-header">
+              <span>Miscellaneous</span>
+            </summary>
+            <ul>
+              <!-- menu items -->
+              <li title="Bullet" id="item-Bullet" class="nav-item class " onclick="goToLocation('Bullet.html');">
+                <a tabindex="1" href="javascript:void(0)">Bullet</a>
+              </li>
+              <li title="EmptyTankException" id="item-EmptyTankException" class="nav-item class " onclick="goToLocation('EmptyTankException.html');">
+                <a tabindex="1" href="javascript:void(0)">EmptyTankException</a>
+              </li>
+              <li title="OnAfterBullet" id="item-OnAfterBullet" class="nav-item class " onclick="goToLocation('OnAfterBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnAfterBullet</a>
+              </li>
+              <li title="OnBeforeBullet" id="item-OnBeforeBullet" class="nav-item class " onclick="goToLocation('OnBeforeBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnBeforeBullet</a>
+              </li>
+              <li title="OnDeleteBullet" id="item-OnDeleteBullet" class="nav-item class " onclick="goToLocation('OnDeleteBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnDeleteBullet</a>
+              </li>
+              <li title="OnDeleteBulletTest" id="item-OnDeleteBulletTest" class="nav-item class " onclick="goToLocation('OnDeleteBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnDeleteBulletTest</a>
+              </li>
+              <li title="OnInsertBullet" id="item-OnInsertBullet" class="nav-item class " onclick="goToLocation('OnInsertBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnInsertBullet</a>
+              </li>
+              <li title="OnInsertBulletTest" id="item-OnInsertBulletTest" class="nav-item class " onclick="goToLocation('OnInsertBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnInsertBulletTest</a>
+              </li>
+              <li title="OnUndeleteBullet" id="item-OnUndeleteBullet" class="nav-item class " onclick="goToLocation('OnUndeleteBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUndeleteBullet</a>
+              </li>
+              <li title="OnUndeleteBulletTest" id="item-OnUndeleteBulletTest" class="nav-item class " onclick="goToLocation('OnUndeleteBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUndeleteBulletTest</a>
+              </li>
+              <li title="OnUpdateBullet" id="item-OnUpdateBullet" class="nav-item class " onclick="goToLocation('OnUpdateBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUpdateBullet</a>
+              </li>
+              <li title="OnUpdateBulletTest" id="item-OnUpdateBulletTest" class="nav-item class " onclick="goToLocation('OnUpdateBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUpdateBulletTest</a>
+              </li>
+              <li title="Propellant" id="item-Propellant" class="nav-item class " onclick="goToLocation('Propellant.html');">
+                <a tabindex="1" href="javascript:void(0)">Propellant</a>
+              </li>
+              <li title="PropellantTest" id="item-PropellantTest" class="nav-item class " onclick="goToLocation('PropellantTest.html');">
+                <a tabindex="1" href="javascript:void(0)">PropellantTest</a>
+              </li>
+              <li title="Tank" id="item-Tank" class="nav-item class " onclick="goToLocation('Tank.html');">
+                <a tabindex="1" href="javascript:void(0)">Tank</a>
+              </li>
+              <li title="TankTest" id="item-TankTest" class="nav-item class " onclick="goToLocation('TankTest.html');">
+                <a tabindex="1" href="javascript:void(0)">TankTest</a>
+              </li>
+            </ul>
+          </details>
+        </nav>
+      </div>
+    </div>
+    <table id="content">
+      <tr>
+        <td class="scoping-panel">
+          Show: <input type="checkbox" checked="true" id="cbx-all" onclick="toggleAllScopes(this.checked);" />
+          <label for="cbx-all">All</label>&nbsp;&nbsp;
+          <input type="checkbox" checked="true" id="cbx-global" onclick="toggleScope('global', this.checked);" />
+          <label for="cbx-global">
+            global
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-public" onclick="toggleScope('public', this.checked);" />
+          <label for="cbx-public">
+            public
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-protected" onclick="toggleScope('protected', this.checked);" />
+          <label for="cbx-protected">
+            protected
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-private" onclick="toggleScope('private', this.checked);" />
+          <label for="cbx-private">
+            private
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-testmethod" onclick="toggleScope('testmethod', this.checked);" />
+          <label for="cbx-testmethod">
+            testMethod
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-webservice" onclick="toggleScope('webservice', this.checked);" />
+          <label for="cbx-webservice">
+            webService
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-page">
+
+          <div class="section">
+
+            <h2 class="class-title top-level-type" id="OnUpdateBullet">
+              <span>OnUpdateBullet</span>
+            </h2>
+            <div class="class-container">
+
+              <div class="class-description">
+                Partial implementation of Update bullets (before and after)
+              </div>
+              <div class="class-subtitle">
+                Signature
+              </div>
+
+              <div class="class-signature">
+                public abstract class OnUpdateBullet implements OnBeforeBullet, OnAfterBullet
+              </div><br />Jose Berardo Cunha<br />30/04/2020
+            </div>
+            <div class="subsection properties OnUpdateBullet">
+              <h3 class="subsection-title properties">OnUpdateBullet Properties</h2>
+                <table class="attributes-table properties">
+
+                  <tr>
+                    <th>Name</th>
+                    <th>Signature</th>
+
+
+                  </tr>
+                  <tr class="property ">
+                    <td class="attribute-name"><span>newMap</span></td>
+                    <td>
+                      <div class="attribute-signature">
+                        protected Map&lt;ID, SObject&gt; newMap
+                      </div>
+                    </td>
+
+
+                  </tr>
+                  <tr class="property ">
+                    <td class="attribute-name"><span>newSet</span></td>
+                    <td>
+                      <div class="attribute-signature">
+                        protected Set&lt;SObject&gt; newSet
+                      </div>
+                    </td>
+
+
+                  </tr>
+                  <tr class="property ">
+                    <td class="attribute-name"><span>oldMap</span></td>
+                    <td>
+                      <div class="attribute-signature">
+                        protected Map&lt;ID, SObject&gt; oldMap
+                      </div>
+                    </td>
+
+
+                  </tr>
+                  <tr class="property ">
+                    <td class="attribute-name"><span>oldSet</span></td>
+                    <td>
+                      <div class="attribute-signature">
+                        protected Set&lt;SObject&gt; oldSet
+                      </div>
+                    </td>
+
+
+                  </tr>
+                </table>
+            </div>
+            <div class="subsection methods">
+              <h3 class="subsection-title methods">OnUpdateBullet Constructors</h3>
+              <div class="methods-container">
+                <ul class="methods-toc">
+                  <li class="method private">
+                    <a class="methods-toc__entry " href="#OnUpdateBullet.OnUpdateBullet">
+                      OnUpdateBullet ()
+                    </a>
+
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUpdateBullet.OnUpdateBullet_1">
+                      OnUpdateBullet (newSet)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Creates an OnUpdateBullet with a Set of Objects
+                    </div>
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUpdateBullet.OnUpdateBullet_2">
+                      OnUpdateBullet (newSet, oldSet)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Creates an OnUpdateBullet with two Set of Objects
+                    </div>
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUpdateBullet.OnUpdateBullet_3">
+                      OnUpdateBullet (newMap)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Creates an OnUpdateBullet with a Map of Id -&gt; Objects
+                    </div>
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUpdateBullet.OnUpdateBullet_4">
+                      OnUpdateBullet (newMap, oldMap)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Creates an OnUpdateBullet with two Maps of Id -&gt; Objects
+                    </div>
+                  </li>
+                </ul>
+                <div class="method private">
+                  <h4 class="method-title " id="OnUpdateBullet.OnUpdateBullet">
+                    <span>OnUpdateBullet()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+                  <div class="method-annotations">@SuppressWarnings('PMD.EmptyStatementBlock')</div>
+                  <div class="method-signature">
+                    private OnUpdateBullet()
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUpdateBullet.OnUpdateBullet_1">
+                    <span>OnUpdateBullet(newSet)</span>
+                  </h4>
+                  <div class="method-description">
+                    Creates an OnUpdateBullet with a Set of Objects
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public OnUpdateBullet(Set&lt;SObject&gt; newSet)
+                  </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">newSet</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Set&lt;SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Set of SObjects expected to be passed (e.g. Trigger.new)</div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUpdateBullet.OnUpdateBullet_2">
+                    <span>OnUpdateBullet(newSet, oldSet)</span>
+                  </h4>
+                  <div class="method-description">
+                    Creates an OnUpdateBullet with two Set of Objects
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public OnUpdateBullet(Set&lt;SObject&gt; newSet, Set&lt;SObject&gt; oldSet)
+                  </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">newSet</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Set&lt;SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Set of SObjects expected to be passed (e.g. Trigger.new)</div>
+                  <div class="param-name">oldSet</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Set&lt;SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Set of SObjects expected to be passed (e.g. Trigger.old)</div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUpdateBullet.OnUpdateBullet_3">
+                    <span>OnUpdateBullet(newMap)</span>
+                  </h4>
+                  <div class="method-description">
+                    Creates an OnUpdateBullet with a Map of Id -&gt; Objects
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public OnUpdateBullet(Map&lt;ID, SObject&gt; newMap)
+                  </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">newMap</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Map&lt;ID, SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Map of Id -&gt; SObject expected to be passed (e.g. Trigger.newMap)</div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUpdateBullet.OnUpdateBullet_4">
+                    <span>OnUpdateBullet(newMap, oldMap)</span>
+                  </h4>
+                  <div class="method-description">
+                    Creates an OnUpdateBullet with two Maps of Id -&gt; Objects
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public OnUpdateBullet(Map&lt;ID, SObject&gt; newMap, Map&lt;ID, SObject&gt; oldMap)
+                  </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">newMap</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Map&lt;ID, SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Map of Id -&gt; SObject expected to be passed (e.g. Trigger.newMap)</div>
+                  <div class="param-name">oldMap</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Map&lt;ID, SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Map of Id -&gt; SObject expected to be passed (e.g. Trigger.oldMap)</div>
+                </div>
+              </div>
+            </div>
+            <div class="subsection methods">
+              <h3 class="subsection-title methods">OnUpdateBullet Methods</h3>
+              <div class="methods-container">
+                <ul class="methods-toc">
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUpdateBullet.canFire">
+                      canFire (triggerWhen, propellant)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Takes the TriggerOperation to fire off on <code class="code-inline">BEFORE_UPDATE</code> and <code class="code-inline">AFTER_UPDATE</code>
+                    </div>
+                  </li>
+                </ul>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUpdateBullet.canFire">
+                    <span>canFire(triggerWhen, propellant)</span>
+                  </h4>
+                  <div class="method-description">
+                    Takes the TriggerOperation to fire off on <code class="code-inline">BEFORE_UPDATE</code> and <code class="code-inline">AFTER_UPDATE</code>
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public virtual Boolean canFire(TriggerOperation triggerWhen, Propellant propellant)
+                  </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">fireWhen</div>
+                  <div class="param-description">System.TriggerOperation</div>
+                  <div class="param-name">propellant</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Propellant</code>
+                  </div>
+                  <div class="param-description">Propellant object not in use here</div>
+                  <div class="method-subtitle">
+                    Returns
+                  </div>
+                  <div class="method-subtitle-description">
+                    <code class="code-inline">Boolean</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+
+          <div>
+            <a href="https://github.com/no-stack-dub-sack/apexdox-vs-code" target="_blank" rel="noopener noreferrer">
+              Powered By ApexDox VS Code
+            </a>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+
+</html>

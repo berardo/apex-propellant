@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>Apex Documentation</title>
+    <meta charset="UTF-8">
+    <script type="module" src="./assets/index.js"></script>
+    <script type="module" src="./assets/search-idx.js"></script>
+    <script type="module" src="./assets/search.js"></script>
+    <script charset="UTF-8" src="./assets/highlight.js"></script>
+    <script charset="UTF-8" src="./assets/mark.js"></script>
+    <script charset="UTF-8" src="./assets/lunr.js"></script>
+    <link rel="stylesheet" href="./assets/highlight.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/index.css" />
+    <link rel="shortcut icon" type="image/png" href="./assets/favicon.png" />
+  </head>
+
+  <body>
+    <div id="side-bar">
+
+      <div id="logo-container">
+        <div class="title">
+          Apex Documentation
+        </div>
+        <img src="assets/logo.png" />
+        <div class="subtitle">
+          Powered by <a target="_blank" rel="noopener noreferrer" href="https://github.com/no-stack-dub-sack/apexdox-vs-code">ApexDox VS Code</a>
+        </div>
+      </div>
+      <div id="search-wrapper">
+        <div class="search-icon"></div>
+        <input id="search-input" type="text" autocomplete="off" placeholder="Search...">
+      </div>
+      <ul id="search-results" class=""></ul>
+      <div class="navbar">
+        <nav role="navigation">
+          <a class="nav-header" id="home" href="javascript:void(0)" onclick="goToLocation('index.html');">
+            Home
+          </a>
+          <details id="Miscellaneous" class="group-name">
+            <summary id="header-Miscellaneous" class="nav-header">
+              <span>Miscellaneous</span>
+            </summary>
+            <ul>
+              <!-- menu items -->
+              <li title="Bullet" id="item-Bullet" class="nav-item class " onclick="goToLocation('Bullet.html');">
+                <a tabindex="1" href="javascript:void(0)">Bullet</a>
+              </li>
+              <li title="EmptyTankException" id="item-EmptyTankException" class="nav-item class " onclick="goToLocation('EmptyTankException.html');">
+                <a tabindex="1" href="javascript:void(0)">EmptyTankException</a>
+              </li>
+              <li title="OnAfterBullet" id="item-OnAfterBullet" class="nav-item class " onclick="goToLocation('OnAfterBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnAfterBullet</a>
+              </li>
+              <li title="OnBeforeBullet" id="item-OnBeforeBullet" class="nav-item class " onclick="goToLocation('OnBeforeBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnBeforeBullet</a>
+              </li>
+              <li title="OnDeleteBullet" id="item-OnDeleteBullet" class="nav-item class " onclick="goToLocation('OnDeleteBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnDeleteBullet</a>
+              </li>
+              <li title="OnDeleteBulletTest" id="item-OnDeleteBulletTest" class="nav-item class " onclick="goToLocation('OnDeleteBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnDeleteBulletTest</a>
+              </li>
+              <li title="OnInsertBullet" id="item-OnInsertBullet" class="nav-item class " onclick="goToLocation('OnInsertBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnInsertBullet</a>
+              </li>
+              <li title="OnInsertBulletTest" id="item-OnInsertBulletTest" class="nav-item class " onclick="goToLocation('OnInsertBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnInsertBulletTest</a>
+              </li>
+              <li title="OnUndeleteBullet" id="item-OnUndeleteBullet" class="nav-item class " onclick="goToLocation('OnUndeleteBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUndeleteBullet</a>
+              </li>
+              <li title="OnUndeleteBulletTest" id="item-OnUndeleteBulletTest" class="nav-item class " onclick="goToLocation('OnUndeleteBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUndeleteBulletTest</a>
+              </li>
+              <li title="OnUpdateBullet" id="item-OnUpdateBullet" class="nav-item class " onclick="goToLocation('OnUpdateBullet.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUpdateBullet</a>
+              </li>
+              <li title="OnUpdateBulletTest" id="item-OnUpdateBulletTest" class="nav-item class " onclick="goToLocation('OnUpdateBulletTest.html');">
+                <a tabindex="1" href="javascript:void(0)">OnUpdateBulletTest</a>
+              </li>
+              <li title="Propellant" id="item-Propellant" class="nav-item class " onclick="goToLocation('Propellant.html');">
+                <a tabindex="1" href="javascript:void(0)">Propellant</a>
+              </li>
+              <li title="PropellantTest" id="item-PropellantTest" class="nav-item class " onclick="goToLocation('PropellantTest.html');">
+                <a tabindex="1" href="javascript:void(0)">PropellantTest</a>
+              </li>
+              <li title="Tank" id="item-Tank" class="nav-item class " onclick="goToLocation('Tank.html');">
+                <a tabindex="1" href="javascript:void(0)">Tank</a>
+              </li>
+              <li title="TankTest" id="item-TankTest" class="nav-item class " onclick="goToLocation('TankTest.html');">
+                <a tabindex="1" href="javascript:void(0)">TankTest</a>
+              </li>
+            </ul>
+          </details>
+        </nav>
+      </div>
+    </div>
+    <table id="content">
+      <tr>
+        <td class="scoping-panel">
+          Show: <input type="checkbox" checked="true" id="cbx-all" onclick="toggleAllScopes(this.checked);" />
+          <label for="cbx-all">All</label>&nbsp;&nbsp;
+          <input type="checkbox" checked="true" id="cbx-global" onclick="toggleScope('global', this.checked);" />
+          <label for="cbx-global">
+            global
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-public" onclick="toggleScope('public', this.checked);" />
+          <label for="cbx-public">
+            public
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-protected" onclick="toggleScope('protected', this.checked);" />
+          <label for="cbx-protected">
+            protected
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-private" onclick="toggleScope('private', this.checked);" />
+          <label for="cbx-private">
+            private
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-testmethod" onclick="toggleScope('testmethod', this.checked);" />
+          <label for="cbx-testmethod">
+            testMethod
+          </label>&nbsp;&nbsp;<input type="checkbox" checked="true" id="cbx-webservice" onclick="toggleScope('webservice', this.checked);" />
+          <label for="cbx-webservice">
+            webService
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td class="doc-page">
+
+          <div class="section">
+
+            <h2 class="class-title top-level-type" id="OnUndeleteBulletTest">
+              <span>OnUndeleteBulletTest</span>
+            </h2>
+            <div class="class-container">
+
+              <div class="class-subtitle">
+                Signature
+              </div>
+              <div class="class-annotations">@isTest</div>
+              <div class="class-signature">
+                public class OnUndeleteBulletTest
+              </div>
+            </div>
+            <div class="subsection methods">
+              <h3 class="subsection-title methods">OnUndeleteBulletTest Methods</h3>
+              <div class="methods-container">
+                <ul class="methods-toc">
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.testCanFire">
+                      testCanFire ()
+                    </a>
+
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.testMapConstructor">
+                      testMapConstructor ()
+                    </a>
+
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.testSetConstructor">
+                      testSetConstructor ()
+                    </a>
+
+                  </li>
+                </ul>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.testCanFire">
+                    <span>testCanFire()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+                  <div class="method-annotations">@isTest</div>
+                  <div class="method-signature">
+                    public static void testCanFire()
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.testMapConstructor">
+                    <span>testMapConstructor()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+                  <div class="method-annotations">@isTest</div>
+                  <div class="method-signature">
+                    public static void testMapConstructor()
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.testSetConstructor">
+                    <span>testSetConstructor()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+                  <div class="method-annotations">@isTest</div>
+                  <div class="method-signature">
+                    public static void testSetConstructor()
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+
+            <h2 class="class-title " id="OnUndeleteBulletTest.OnUndeleteBulletImpl">
+              <span>OnUndeleteBulletTest.OnUndeleteBulletImpl</span>
+            </h2>
+            <div class="class-container">
+
+              <div class="class-subtitle">
+                Signature
+              </div>
+
+              <div class="class-signature">
+                class OnUndeleteBulletImpl extends OnUndeleteBullet
+              </div>
+            </div>
+            <div class="subsection methods">
+              <h3 class="subsection-title methods">OnUndeleteBulletTest.OnUndeleteBulletImpl Constructors</h3>
+              <div class="methods-container">
+                <ul class="methods-toc">
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.OnUndeleteBulletImpl.OnUndeleteBulletImpl">
+                      OnUndeleteBulletImpl (newSet)
+                    </a>
+
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.OnUndeleteBulletImpl.OnUndeleteBulletImpl_1">
+                      OnUndeleteBulletImpl (newMap)
+                    </a>
+
+                  </li>
+                </ul>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.OnUndeleteBulletImpl.OnUndeleteBulletImpl">
+                    <span>OnUndeleteBulletImpl(newSet)</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public OnUndeleteBulletImpl(Set&lt;SObject&gt; newSet)
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.OnUndeleteBulletImpl.OnUndeleteBulletImpl_1">
+                    <span>OnUndeleteBulletImpl(newMap)</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public OnUndeleteBulletImpl(Map&lt;ID, SObject&gt; newMap)
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="subsection methods">
+              <h3 class="subsection-title methods">OnUndeleteBulletTest.OnUndeleteBulletImpl Methods</h3>
+              <div class="methods-container">
+                <ul class="methods-toc">
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.OnUndeleteBulletImpl.exposeMap">
+                      exposeMap ()
+                    </a>
+
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.OnUndeleteBulletImpl.exposeSet">
+                      exposeSet ()
+                    </a>
+
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.OnUndeleteBulletImpl.onAfterFire">
+                      onAfterFire ()
+                    </a>
+
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteBulletTest.OnUndeleteBulletImpl.onBeforeFire">
+                      onBeforeFire ()
+                    </a>
+
+                  </li>
+                </ul>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.OnUndeleteBulletImpl.exposeMap">
+                    <span>exposeMap()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public Map&lt;ID, SObject&gt; exposeMap()
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.OnUndeleteBulletImpl.exposeSet">
+                    <span>exposeSet()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public Set&lt;SObject&gt; exposeSet()
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.OnUndeleteBulletImpl.onAfterFire">
+                    <span>onAfterFire()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public void onAfterFire()
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteBulletTest.OnUndeleteBulletImpl.onBeforeFire">
+                    <span>onBeforeFire()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public void onBeforeFire()
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="footer">
+
+          <div>
+            <a href="https://github.com/no-stack-dub-sack/apexdox-vs-code" target="_blank" rel="noopener noreferrer">
+              Powered By ApexDox VS Code
+            </a>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+
+</html>
