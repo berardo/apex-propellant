@@ -1,29 +1,29 @@
 /**
- * Partial implementation of Delete bullets (before and after)
+ * Partial implementation of Delete rockets (before and after)
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */
-public abstract class OnDeleteBullet implements OnBeforeBullet, OnAfterBullet {
+public abstract class OnDeleteRocket implements OnBeforeRocket, OnAfterRocket {
   protected Set<SObject> oldSet { get; private set; }
   protected Map<ID, SObject> oldMap { get; private set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
-  private OnDeleteBullet() {
+  private OnDeleteRocket() {
   }
 
   /**
-   * Creates an OnDeleteBullet with a Set of Objects
+   * Creates an OnDeleteRocket with a Set of Objects
    * @param oldSet Set of SObjects expected to be passed (e.g. Trigger.old)
    */
-  public OnDeleteBullet(Set<SObject> oldSet) {
+  public OnDeleteRocket(Set<SObject> oldSet) {
     this.oldSet = oldSet;
   }
 
   /**
-   * Creates an OnUpdateBullet with a Map of Id -> Objects
+   * Creates an OnUpdateRocket with a Map of Id -> Objects
    * @param oldMap Map of Id -> SObject expecteds to be passed (e.g. Trigger.oldMap)
    */
-  public OnDeleteBullet(Map<ID, SObject> oldMap) {
+  public OnDeleteRocket(Map<ID, SObject> oldMap) {
     this.oldMap = oldMap;
   }
 

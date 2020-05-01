@@ -1,50 +1,50 @@
 /**
- * Partial implementation of Update bullets (before and after)
+ * Partial implementation of Update rockets (before and after)
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */
-public abstract class OnUpdateBullet implements OnBeforeBullet, OnAfterBullet {
+public abstract class OnUpdateRocket implements OnBeforeRocket, OnAfterRocket {
   protected Set<SObject> newSet { get; private set; }
   protected Set<SObject> oldSet { get; private set; }
   protected Map<ID, SObject> newMap { get; private set; }
   protected Map<ID, SObject> oldMap { get; private set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
-  private OnUpdateBullet() {
+  private OnUpdateRocket() {
   }
 
   /**
-   * Creates an OnUpdateBullet with a Set of Objects
+   * Creates an OnUpdateRocket with a Set of Objects
    * @param newSet Set of SObjects expected to be passed (e.g. Trigger.new)
    */
-  public OnUpdateBullet(Set<SObject> newSet) {
+  public OnUpdateRocket(Set<SObject> newSet) {
     this(newSet, null);
   }
 
   /**
-   * Creates an OnUpdateBullet with two Set of Objects
+   * Creates an OnUpdateRocket with two Set of Objects
    * @param newSet Set of SObjects expected to be passed (e.g. Trigger.new)
    * @param oldSet Set of SObjects expected to be passed (e.g. Trigger.old)
    */
-  public OnUpdateBullet(Set<SObject> newSet, Set<SObject> oldSet) {
+  public OnUpdateRocket(Set<SObject> newSet, Set<SObject> oldSet) {
     this.newSet = newSet;
     this.oldSet = oldSet;
   }
 
   /**
-   * Creates an OnUpdateBullet with a Map of Id -> Objects
+   * Creates an OnUpdateRocket with a Map of Id -> Objects
    * @param newMap Map of Id -> SObject expected to be passed (e.g. Trigger.newMap)
    */
-  public OnUpdateBullet(Map<ID, SObject> newMap) {
+  public OnUpdateRocket(Map<ID, SObject> newMap) {
     this(newMap, null);
   }
 
   /**
-   * Creates an OnUpdateBullet with two Maps of Id -> Objects
+   * Creates an OnUpdateRocket with two Maps of Id -> Objects
    * @param newMap Map of Id -> SObject expected to be passed (e.g. Trigger.newMap)
    * @param oldMap Map of Id -> SObject expected to be passed (e.g. Trigger.oldMap)
    */
-  public OnUpdateBullet(Map<ID, SObject> newMap, Map<ID, SObject> oldMap) {
+  public OnUpdateRocket(Map<ID, SObject> newMap, Map<ID, SObject> oldMap) {
     this.newMap = newMap;
     this.oldMap = oldMap;
   }

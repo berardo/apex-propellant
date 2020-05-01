@@ -1,64 +1,64 @@
 @isTest
 public with sharing class PropellantTest {
   @isTest
-  public static void testOnBeforeBulletConstructor() {
-    OnBeforeBullet bullet = new OnBeforeBulletTest();
-    Propellant p = new Propellant(bullet);
-    System.assertEquals(bullet, p.beforeBullet, 'Bullet not properly assigned');
+  public static void testOnBeforeRocketConstructor() {
+    OnBeforeRocket rocket = new OnBeforeRocketTest();
+    Propellant p = new Propellant(rocket);
+    System.assertEquals(rocket, p.beforeRocket, 'Rocket not properly assigned');
   }
 
   @isTest
-  public static void testOnAfterBulletConstructor() {
-    OnAfterBullet bullet = new OnAfterBulletTest();
-    Propellant p = new Propellant(bullet);
-    System.assertEquals(bullet, p.afterBullet, 'Bullet not properly assigned');
+  public static void testOnAfterRocketConstructor() {
+    OnAfterRocket rocket = new OnAfterRocketTest();
+    Propellant p = new Propellant(rocket);
+    System.assertEquals(rocket, p.afterRocket, 'Rocket not properly assigned');
   }
 
   @isTest
   public static void testOnBothConstructor() {
-    OnBeforeBullet beforeBullet = new OnBeforeBulletTest();
-    OnAfterBullet afterBullet = new OnAfterBulletTest();
-    Propellant p = new Propellant(beforeBullet, afterBullet);
-    System.assertEquals(beforeBullet, p.beforeBullet, 'Before bullet not properly assigned');
-    System.assertEquals(afterBullet, p.afterBullet, 'After bullet not properly assigned');
+    OnBeforeRocket beforeRocket = new OnBeforeRocketTest();
+    OnAfterRocket afterRocket = new OnAfterRocketTest();
+    Propellant p = new Propellant(beforeRocket, afterRocket);
+    System.assertEquals(beforeRocket, p.beforeRocket, 'Before rocket not properly assigned');
+    System.assertEquals(afterRocket, p.afterRocket, 'After rocket not properly assigned');
   }
 
   @isTest
-  public static void testOnBeforeBulletWithTankConstructor() {
+  public static void testOnBeforeRocketWithTankConstructor() {
     Tank t = new Tank();
-    OnBeforeBullet bullet = new OnBeforeBulletTest();
-    Propellant p = new Propellant(bullet, t);
-    System.assertEquals(bullet, p.beforeBullet, 'Bullet not properly assigned');
+    OnBeforeRocket rocket = new OnBeforeRocketTest();
+    Propellant p = new Propellant(rocket, t);
+    System.assertEquals(rocket, p.beforeRocket, 'Rocket not properly assigned');
     System.assertEquals(t, p.tank, 'Tank not properly assigned');
   }
 
   @isTest
-  public static void testOnAfterBulletWithTankConstructor() {
+  public static void testOnAfterRocketWithTankConstructor() {
     Tank t = new Tank();
-    OnAfterBullet bullet = new OnAfterBulletTest();
-    Propellant p = new Propellant(bullet, t);
-    System.assertEquals(bullet, p.afterBullet, 'Bullet not properly assigned');
+    OnAfterRocket rocket = new OnAfterRocketTest();
+    Propellant p = new Propellant(rocket, t);
+    System.assertEquals(rocket, p.afterRocket, 'Rocket not properly assigned');
     System.assertEquals(t, p.tank, 'Tank not properly assigned');
   }
 
   @isTest
   public static void testOnBothWithTankConstructor() {
     Tank t = new Tank();
-    OnBeforeBullet beforeBullet = new OnBeforeBulletTest();
-    OnAfterBullet afterBullet = new OnAfterBulletTest();
-    Propellant p = new Propellant(beforeBullet, afterBullet, t);
-    System.assertEquals(beforeBullet, p.beforeBullet, 'Before bullet not properly assigned');
-    System.assertEquals(afterBullet, p.afterBullet, 'After bullet not properly assigned');
+    OnBeforeRocket beforeRocket = new OnBeforeRocketTest();
+    OnAfterRocket afterRocket = new OnAfterRocketTest();
+    Propellant p = new Propellant(beforeRocket, afterRocket, t);
+    System.assertEquals(beforeRocket, p.beforeRocket, 'Before rocket not properly assigned');
+    System.assertEquals(afterRocket, p.afterRocket, 'After rocket not properly assigned');
     System.assertEquals(t, p.tank, 'Tank not properly assigned');
   }
 
   @isTest
   public static void testFireOffCannotRun() {
     Tank t = new Tank();
-    OnBeforeBullet beforeBullet = new OnBeforeBulletTest();
-    OnAfterBullet afterBullet = new OnAfterBulletTest();
+    OnBeforeRocket beforeRocket = new OnBeforeRocketTest();
+    OnAfterRocket afterRocket = new OnAfterRocketTest();
     
-    Propellant prop = new Propellant(beforeBullet, afterBullet, t);
+    Propellant prop = new Propellant(beforeRocket, afterRocket, t);
     Propellant newProp = prop.fireOff();
 
     System.assertEquals(0, newProp.tank.consumed, 'Tank cannot be consumed');
@@ -67,12 +67,12 @@ public with sharing class PropellantTest {
   @isTest
   public static void testFireOffCanRun() {
     Tank t = new Tank();
-    OnBeforeBullet beforeBullet = new OnBeforeBulletTest();
-    OnAfterBullet afterBullet = new OnAfterBulletTest();
+    OnBeforeRocket beforeRocket = new OnBeforeRocketTest();
+    OnAfterRocket afterRocket = new OnAfterRocketTest();
     
-    Propellant prop1 = new Propellant(beforeBullet, t);
-    Propellant prop2 = new Propellant(afterBullet, t);
-    Propellant prop3 = new Propellant(beforeBullet, afterBullet, t);
+    Propellant prop1 = new Propellant(beforeRocket, t);
+    Propellant prop2 = new Propellant(afterRocket, t);
+    Propellant prop3 = new Propellant(beforeRocket, afterRocket, t);
     prop1.skipForTestingPurposes = true;
     prop2.skipForTestingPurposes = true;
     prop3.skipForTestingPurposes = true;
@@ -85,7 +85,7 @@ public with sharing class PropellantTest {
     System.assertEquals(1, newProp3.tank.consumed, 'Tank must be consumed');
   }
 
-  private class OnBeforeBulletTest implements OnBeforeBullet {
+  private class OnBeforeRocketTest implements OnBeforeRocket {
     public void onBeforeFire() {
       System.debug('Test');
     }
@@ -93,7 +93,7 @@ public with sharing class PropellantTest {
       return true;
     }
   }
-  private class OnAfterBulletTest implements OnAfterBullet {
+  private class OnAfterRocketTest implements OnAfterRocket {
     public void onAfterFire() {
       System.debug('Test');
     }

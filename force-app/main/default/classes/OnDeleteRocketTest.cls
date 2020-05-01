@@ -1,43 +1,43 @@
 @isTest
-public class OnDeleteBulletTest {
+public class OnDeleteRocketTest {
   @isTest
   public static void testSetConstructor() {
     Set<SObject> oldSet = new Set<SObject>();
-    OnDeleteBulletImpl bullet = new OnDeleteBulletImpl(oldSet);
-    System.assertEquals(oldSet, bullet.exposeSet(), 'oldSet not properly assigned');
+    OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldSet);
+    System.assertEquals(oldSet, rocket.exposeSet(), 'oldSet not properly assigned');
   }
 
   @isTest
   public static void testMapConstructor() {
     Map<ID, SObject> oldMap = new Map<ID, SObject>();
-    OnDeleteBulletImpl bullet = new OnDeleteBulletImpl(oldMap);
-    System.assertEquals(oldMap, bullet.exposeMap(), 'oldMap not properly assigned');
+    OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldMap);
+    System.assertEquals(oldMap, rocket.exposeMap(), 'oldMap not properly assigned');
   }
 
   @isTest
   public static void testCanFire() {
     Set<SObject> oldSet = new Set<SObject>();
-    OnDeleteBulletImpl bullet = new OnDeleteBulletImpl(oldSet);
+    OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldSet);
     System.assert(
-      bullet.canFire(TriggerOperation.BEFORE_DELETE, null),
+      rocket.canFire(TriggerOperation.BEFORE_DELETE, null),
       'Can Fire on before delete'
     );
     System.assert(
-      bullet.canFire(TriggerOperation.AFTER_DELETE, null),
+      rocket.canFire(TriggerOperation.AFTER_DELETE, null),
       'Can Fire on after delete'
     );
     System.assertEquals(
       false,
-      bullet.canFire(TriggerOperation.AFTER_UPDATE, null),
+      rocket.canFire(TriggerOperation.AFTER_UPDATE, null),
       'Cannot Fire on after update'
     );
   }
 
-  class OnDeleteBulletImpl extends OnDeleteBullet {
-    public OnDeleteBulletImpl(Set<SObject> oldSet) {
+  class OnDeleteRocketImpl extends OnDeleteRocket {
+    public OnDeleteRocketImpl(Set<SObject> oldSet) {
       super(oldSet);
     }
-    public OnDeleteBulletImpl(Map<ID, SObject> oldMap) {
+    public OnDeleteRocketImpl(Map<ID, SObject> oldMap) {
       super(oldMap);
     }
     public void onBeforeFire() {

@@ -1,10 +1,10 @@
 /**
- * Defines what before bullets have to do
+ * Defines what before rockets have to do
  * @author Jose Berardo Cunha
  * @since 30/04/2020
- * @see Bullet
+ * @see Rocket
  */
-public interface OnBeforeBullet extends Bullet {
+public interface OnBeforeRocket extends Rocket {
   /**
    * Implement here your before trigger logic
    */

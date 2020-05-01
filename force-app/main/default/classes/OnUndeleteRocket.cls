@@ -1,29 +1,29 @@
 /**
- * Partial implementation of Undelete bullets (before and after)
+ * Partial implementation of Undelete rockets (before and after)
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */
-public abstract class OnUndeleteBullet implements OnAfterBullet {
+public abstract class OnUndeleteRocket implements OnAfterRocket {
   protected Set<SObject> newSet { get; private set; }
   protected Map<ID, SObject> newMap { get; private set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
-  private OnUndeleteBullet() {
+  private OnUndeleteRocket() {
   }
 
   /**
-   * Creates an OnUndeleteBullet with a Set of Objects
+   * Creates an OnUndeleteRocket with a Set of Objects
    * @param newSet Set of SObjects expected to be passed (e.g. Trigger.new)
    */
-  public OnUndeleteBullet(Set<SObject> newSet) {
+  public OnUndeleteRocket(Set<SObject> newSet) {
     this.newSet = newSet;
   }
 
   /**
-   * Creates an OnUndeleteBullet with a Map of Id -> Objects
+   * Creates an OnUndeleteRocket with a Map of Id -> Objects
    * @param newMap Map of Id -> SObject expecteds to be passed (e.g. Trigger.newMap)
    */
-  public OnUndeleteBullet(Map<ID, SObject> newMap) {
+  public OnUndeleteRocket(Map<ID, SObject> newMap) {
     this.newMap = newMap;
   }
 

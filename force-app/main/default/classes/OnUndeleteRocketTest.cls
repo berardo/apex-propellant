@@ -1,39 +1,39 @@
 @isTest
-public class OnUndeleteBulletTest {
+public class OnUndeleteRocketTest {
   @isTest
   public static void testSetConstructor() {
     Set<SObject> newSet = new Set<SObject>();
-    OnUndeleteBulletImpl bullet = new OnUndeleteBulletImpl(newSet);
-    System.assertEquals(newSet, bullet.exposeSet(), 'newSet not properly assigned');
+    OnUndeleteRocketImpl rocket = new OnUndeleteRocketImpl(newSet);
+    System.assertEquals(newSet, rocket.exposeSet(), 'newSet not properly assigned');
   }
 
   @isTest
   public static void testMapConstructor() {
     Map<ID, SObject> newMap = new Map<ID, SObject>();
-    OnUndeleteBulletImpl bullet = new OnUndeleteBulletImpl(newMap);
-    System.assertEquals(newMap, bullet.exposeMap(), 'newMap not properly assigned');
+    OnUndeleteRocketImpl rocket = new OnUndeleteRocketImpl(newMap);
+    System.assertEquals(newMap, rocket.exposeMap(), 'newMap not properly assigned');
   }
 
   @isTest
   public static void testCanFire() {
     Set<SObject> newSet = new Set<SObject>();
-    OnUndeleteBulletImpl bullet = new OnUndeleteBulletImpl(newSet);
+    OnUndeleteRocketImpl rocket = new OnUndeleteRocketImpl(newSet);
     System.assert(
-      bullet.canFire(TriggerOperation.AFTER_UNDELETE, null),
+      rocket.canFire(TriggerOperation.AFTER_UNDELETE, null),
       'Can Fire on after undelete'
     );
     System.assertEquals(
       false,
-      bullet.canFire(TriggerOperation.AFTER_UPDATE, null),
+      rocket.canFire(TriggerOperation.AFTER_UPDATE, null),
       'Cannot Fire on after update'
     );
   }
 
-  class OnUndeleteBulletImpl extends OnUndeleteBullet {
-    public OnUndeleteBulletImpl(Set<SObject> newSet) {
+  class OnUndeleteRocketImpl extends OnUndeleteRocket {
+    public OnUndeleteRocketImpl(Set<SObject> newSet) {
       super(newSet);
     }
-    public OnUndeleteBulletImpl(Map<ID, SObject> newMap) {
+    public OnUndeleteRocketImpl(Map<ID, SObject> newMap) {
       super(newMap);
     }
     public void onBeforeFire() {

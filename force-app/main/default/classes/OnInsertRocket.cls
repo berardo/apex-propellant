@@ -1,29 +1,29 @@
 /**
- * Partial implementation of Insert bullets (before and after)
+ * Partial implementation of Insert rockets (before and after)
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */
-public abstract class OnInsertBullet implements OnBeforeBullet, OnAfterBullet {
+public abstract class OnInsertRocket implements OnBeforeRocket, OnAfterRocket {
   protected Set<SObject> newSet { get; private set; }
   protected Map<ID, SObject> newMap { get; private set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
-  private OnInsertBullet() {
+  private OnInsertRocket() {
   }
 
   /**
-   * Creates an OnInsertBullet with a Set of Objects
+   * Creates an OnInsertRocket with a Set of Objects
    * @param newSet Set of SObjects expected to be passed (e.g. Trigger.new)
    */
-  public OnInsertBullet(Set<SObject> newSet) {
+  public OnInsertRocket(Set<SObject> newSet) {
     this.newSet = newSet;
   }
 
   /**
-   * Creates an OnInsertBullet with a Map of Id -> Objects
+   * Creates an OnInsertRocket with a Map of Id -> Objects
    * @param newMap Map of Id -> SObject expecteds to be passed (e.g. Trigger.newMap)
    */
-  public OnInsertBullet(Map<ID, SObject> newMap) {
+  public OnInsertRocket(Map<ID, SObject> newMap) {
     this.newMap = newMap;
   }
   

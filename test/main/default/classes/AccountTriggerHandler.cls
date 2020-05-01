@@ -1,4 +1,4 @@
-public with sharing class AccountTriggerHandler extends OnInsertBullet {
+public with sharing class AccountTriggerHandler extends OnInsertRocket {
   public AccountTriggerHandler(Set<SObject> newSet) {
     super(newSet);
   }

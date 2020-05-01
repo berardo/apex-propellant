@@ -1,103 +1,103 @@
 /**
- * Main object that fires off before and after trigger bullets.
+ * Main object that fires off before and after trigger rockets.
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */
 public with sharing class Propellant {
-  public OnBeforeBullet beforeBullet { get; private set; }
-  public OnAfterBullet afterBullet { get; private set; }
+  public OnBeforeRocket beforeRocket { get; private set; }
+  public OnAfterRocket afterRocket { get; private set; }
   public Tank tank { get; private set; }
 
   @TestVisible
   private Boolean skipForTestingPurposes = false;
 
   /**
-   * Creates a propellant with only before bullet
-   * @param bullet Object that knows what to do on before trigger event
+   * Creates a propellant with only before rocket
+   * @param rocket Object that knows what to do on before trigger event
    */
-  public Propellant(OnBeforeBullet bullet) {
-    this(bullet, null, null);
+  public Propellant(OnBeforeRocket rocket) {
+    this(rocket, null, null);
   }
 
   /**
-   * Creates a propellant with only after bullet
-   * @param bullet Object that knows what to do on after trigger event
+   * Creates a propellant with only after rocket
+   * @param rocket Object that knows what to do on after trigger event
    */
-  public Propellant(OnAfterBullet bullet) {
-    this(null, bullet, null);
+  public Propellant(OnAfterRocket rocket) {
+    this(null, rocket, null);
   }
 
   /**
-   * Creates a propellant with before and after bullets.
-   * Use the same object on both if it implements `OnBeforeBullet` and `OnAfterBullet`.
-   * @param beforeBullet Object that knows what to do on before trigger event
-   * @param afterBullet Object that knows what to do on after trigger event
+   * Creates a propellant with before and after rockets.
+   * Use the same object on both if it implements `OnBeforeRocket` and `OnAfterRocket`.
+   * @param beforeRocket Object that knows what to do on before trigger event
+   * @param afterRocket Object that knows what to do on after trigger event
    */
-  public Propellant(OnBeforeBullet beforeBullet, OnAfterBullet afterBullet) {
-    this(beforeBullet, afterBullet, null);
+  public Propellant(OnBeforeRocket beforeRocket, OnAfterRocket afterRocket) {
+    this(beforeRocket, afterRocket, null);
   }
 
   /**
-   * Creates a propellant with before bullet and a tank to serve as a guarantor if it works or not
-   * @param bullet Object that knows what to do on before trigger event
-   * @param tank Tank to restrict the bullet to fire off only if it still has capacity
+   * Creates a propellant with before rocket and a tank to serve as a guarantor if it works or not
+   * @param rocket Object that knows what to do on before trigger event
+   * @param tank Tank to restrict the rocket to fire off only if it still has capacity
    */
-  public Propellant(OnBeforeBullet bullet, Tank tank) {
-    this(bullet, null, tank);
+  public Propellant(OnBeforeRocket rocket, Tank tank) {
+    this(rocket, null, tank);
   }
 
   /**
-   * Creates a propellant with before bullet and a tank to serve as a guarantor if it works or not
-   * @param bullet Object that knows what to do on after trigger event
-   * @param tank Tank to restrict the bullet to fire off only if it still has capacity
+   * Creates a propellant with before rocket and a tank to serve as a guarantor if it works or not
+   * @param rocket Object that knows what to do on after trigger event
+   * @param tank Tank to restrict the rocket to fire off only if it still has capacity
    */
-  public Propellant(OnAfterBullet bullet, Tank tank) {
-    this(null, bullet, tank);
+  public Propellant(OnAfterRocket rocket, Tank tank) {
+    this(null, rocket, tank);
   }
 
   /**
-   * Creates a propellant with before and after bullets, and a tank to serve as a guarantor if it works or not.
-   * Use the same object on both if it implements `OnBeforeBullet` and `OnAfterBullet`.
-   * @param beforeBullet Object that knows what to do on before trigger event
-   * @param afterBullet Object that knows what to do on after trigger event
+   * Creates a propellant with before and after rockets, and a tank to serve as a guarantor if it works or not.
+   * Use the same object on both if it implements `OnBeforeRocket` and `OnAfterRocket`.
+   * @param beforeRocket Object that knows what to do on before trigger event
+   * @param afterRocket Object that knows what to do on after trigger event
    */
-  public Propellant(OnBeforeBullet beforeBullet, OnAfterBullet afterBullet, Tank tank) {
-    this.beforeBullet = beforeBullet;
-    this.afterBullet = afterBullet;
+  public Propellant(OnBeforeRocket beforeRocket, OnAfterRocket afterRocket, Tank tank) {
+    this.beforeRocket = beforeRocket;
+    this.afterRocket = afterRocket;
     this.tank = tank;
   }
 
   /**
    * Where the magic happens.
-   * Calls your bullet method, consume the tank and return a new instance of propellant with the consumed state.
+   * Calls your rocket method, consume the tank and return a new instance of propellant with the consumed state.
    * @returns `Propellant` new instance with the consumed state of its tank
    */
   public Propellant fireOff() {
-    if (canFireBeforeBullet()) {
-      beforeBullet.onBeforeFire();
-      if (tank != null && !canFireAfterBullet()) {
-        return new Propellant(beforeBullet, tank.consume());
+    if (canFireBeforeRocket()) {
+      beforeRocket.onBeforeFire();
+      if (tank != null && !canFireAfterRocket()) {
+        return new Propellant(beforeRocket, tank.consume());
       }
     }
-    if (canFireAfterBullet()) {
-      afterBullet.onAfterFire();
+    if (canFireAfterRocket()) {
+      afterRocket.onAfterFire();
       if (tank != null) {
-        return new Propellant(afterBullet, tank.consume());
+        return new Propellant(afterRocket, tank.consume());
       }
     }
 
     return this;
   }
 
-  private Boolean canFireBeforeBullet() {
-    return beforeBullet != null &&
-      (Trigger.isExecuting && Trigger.isBefore && beforeBullet != null &&
-      ((Bullet) beforeBullet).canFire(Trigger.operationType, this) || skipForTestingPurposes);
+  private Boolean canFireBeforeRocket() {
+    return beforeRocket != null &&
+      (Trigger.isExecuting && Trigger.isBefore && beforeRocket != null &&
+      ((Rocket) beforeRocket).canFire(Trigger.operationType, this) || skipForTestingPurposes);
   }
 
-  private Boolean canFireAfterBullet() {
-    return afterBullet != null &&
-      (Trigger.isExecuting && Trigger.isAfter && afterBullet != null &&
-      ((Bullet) beforeBullet).canFire(Trigger.operationType, this) || skipForTestingPurposes);
+  private Boolean canFireAfterRocket() {
+    return afterRocket != null &&
+      (Trigger.isExecuting && Trigger.isAfter && afterRocket != null &&
+      ((Rocket) beforeRocket).canFire(Trigger.operationType, this) || skipForTestingPurposes);
   }
 }
