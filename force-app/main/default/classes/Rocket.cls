@@ -6,9 +6,9 @@
 public interface Rocket {
   /**
    * Define your own logic to decide if your rocket is good to go
-   * @param fireWhen A System.TriggerOperation to let you know when your rocket is being fired off
+   * @param triggerWhen A System.TriggerOperation to let you know when your rocket is being fired off
    * @param propellant A version of the Propellant object for your references
    * @returns `Boolean` If false, your rocket won't fire off
    */
-  Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant);
+  Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant);
 }
