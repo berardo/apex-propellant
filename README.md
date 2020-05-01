@@ -53,7 +53,7 @@ On the other hand, **Propellant** is a simple alternative targeting the same goa
 
 - Decoupling handlers from triggers and `System.Trigger`, allowing them to be tested in isolation
 - Promoting an easy, truly object oriented API
-- Promoting the usage of [immutable objects](https://en.wikipedia.org/wiki/Immutable_object,target=_blank)
+- Promoting the usage of [immutable objects](https://en.wikipedia.org/wiki/Immutable_object)
 - Giving you control over handler call repetitions and bypasses
 
 ## How it works
