@@ -10,7 +10,7 @@ public abstract class OnUpdateRocket implements OnBeforeRocket, OnAfterRocket {
   protected Map<ID, SObject> oldMap { get; private set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
-  private OnUpdateRocket() {
+  public OnUpdateRocket() {
   }
 
   /**
@@ -55,7 +55,7 @@ public abstract class OnUpdateRocket implements OnBeforeRocket, OnAfterRocket {
    * @param propellant Propellant object not in use here
    * @returns `Boolean`
    */
-  public virtual Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
+  public virtual Boolean canFire(TriggerOperation triggerWhen, Propellant propellant) {
     return triggerWhen == TriggerOperation.BEFORE_UPDATE ||
       triggerWhen == TriggerOperation.AFTER_UPDATE;
   }

@@ -8,7 +8,7 @@ public abstract class OnInsertRocket implements OnBeforeRocket, OnAfterRocket {
   protected Map<ID, SObject> newMap { get; private set; }
 
   @SuppressWarnings('PMD.EmptyStatementBlock')
-  private OnInsertRocket() {
+  public OnInsertRocket() {
   }
 
   /**
@@ -33,7 +33,7 @@ public abstract class OnInsertRocket implements OnBeforeRocket, OnAfterRocket {
    * @param propellant Propellant object not in use here
    * @returns `Boolean`
    */
-  public virtual Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
+  public virtual Boolean canFire(TriggerOperation triggerWhen, Propellant propellant) {
     return triggerWhen == TriggerOperation.BEFORE_INSERT ||
       triggerWhen == TriggerOperation.AFTER_INSERT;
   }
