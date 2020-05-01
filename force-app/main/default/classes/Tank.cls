@@ -38,7 +38,7 @@ public class Tank {
    * @returns `boolean`
    */
   public boolean isEmpty() {
-    return consumed == capacity;
+    return consumed >= capacity;
   }
 
   /**

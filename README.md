@@ -232,11 +232,12 @@ Once you pass the argument through `super(newSet)`, you can retrive the informat
 * Using `super(Map<ID, SObject>)` you have `this.newMap`
 * Using `super(Map<ID, SObject>, Map<ID, SObject>)` you have respectively `this.newMap` and `this.oldMap`
 
-Of course you need set everything up on your trigger:
+Of course you need to set everything up on your trigger:
 
 ```java
 trigger AccountTrigger on Account(before insert) {
-  OnBeforeRocket rocket = new MyAmazingRocket(Trigger.new);
+  OnBeforeRocket rocket = new MyAmazingRocket(Trigger.new); // 5, 4, 3, 2, 1 ...
+  new Propellant(rocket).fireOff(); // Can you hear the sound? 🚀
 }
 ```
 
@@ -245,4 +246,26 @@ Although it might seem I left this burden on your shoulders, as I could have acc
 New and old sets and maps belong to the trigger, and having an object with explicit dependency on `System.Trigger` makes it completely not unit testable as the only way to have something like `Trigger.new` populated it by saving a record.
 
 **Remember:** Every time you need to store data before testing your code, you are **NOT** unit testing, you are actually running an integration test. Moreover, despite the importance of integration tests, you code should always be tested in isolation, which is the soul of unit tests.
+
+## Propellant's Tank
+
+The `Propellant` object also accepts an argument of type `Tank`, which comprises two integers, `capacity` and `consumed`. The former accepts any number to represent the tank's capacity and defaults to `5`, the latter obviously represents how much of the capacity has been already consumed and defaults to `0`.
+
+```java
+trigger AccountTrigger on Account(before insert) {
+  Tank tank = new Tank(); // the same as new Tank(5) or new Tank(5, 0);
+  OnBeforeRocket rocket = new MyAmazingRocket(Trigger.new); // 5, 4, 3, 2, 1 ...
+  new Propellant(rocket, tank).fireOff(); // Can you hear the sound? 🚀
+}
+```
+
+`new Propellant(...).fireOff()` needs to perform some checks:
+
+* Am I being called on a trigger execution context?
+* Am I launching a rocket for the appropriate operation?
+* Does my rocket return true via `canTakeOff`? And here `propellant.tank` can be acessed!
+
+Having those questions cleared, and after running the rocket's flight method, Propellant also runs `tank.consume()`, which either returns another `Tank` instance with an incremented `consumed` state or raise an `EmptyTankException` when the `consumed` amount reaches its `capacity`. Finally, `fireOff()` returns a new `Propellant` instance with the existing rockets and the more consumed instance of its tank.
+
+## Immutability
 

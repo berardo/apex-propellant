@@ -8,9 +8,9 @@
  *      | (_) |
  *      |     |
  *      |  _  |
- *     /| (_) |\   
- *    / |     | \  
- *   /  |##!##|  \ 
+ *     /| (_) |\
+ *    / |     | \
+ *   /  |##!##|  \
  *  |  /|##!##|\  |
  *  | / |##!##| \ |
  *  |/   ^ | ^   \|
@@ -101,14 +101,17 @@ public with sharing class Propellant {
   public Propellant fireOff() {
     if (canTakeOffBeforeRocket()) {
       beforeRocket.flyOnBefore();
-      if (tank != null && !canTakeOffAfterRocket()) {
-        return new Propellant(beforeRocket, tank.consume());
+      if (tank != null) {
+        return afterRocket == null
+          ? new Propellant(beforeRocket, tank.consume())
+          : new Propellant(beforeRocket, afterRocket, tank.consume());
       }
-    }
-    if (canTakeOffAfterRocket()) {
+    } else if (canTakeOffAfterRocket()) {
       afterRocket.flyOnAfter();
       if (tank != null) {
-        return new Propellant(afterRocket, tank.consume());
+        return beforeRocket == null
+          ? new Propellant(afterRocket, tank.consume())
+          : new Propellant(beforeRocket, afterRocket, tank.consume());
       }
     }
 
