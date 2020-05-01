@@ -33,7 +33,7 @@ public abstract class OnDeleteRocket implements OnBeforeRocket, OnAfterRocket {
    * @param propellant Propellant object not in use here
    * @returns `Boolean`
    */
-  public virtual Boolean canFire(TriggerOperation triggerWhen, Propellant propellant) {
+  public virtual Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
     return triggerWhen == TriggerOperation.BEFORE_DELETE ||
       triggerWhen == TriggerOperation.AFTER_DELETE;
   }

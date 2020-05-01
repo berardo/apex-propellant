@@ -8,5 +8,5 @@ public interface OnAfterRocket extends Rocket {
   /**
    * Implement here your after trigger logic
    */
-  void onAfterFire();
+  void flyOnAfter();
 }

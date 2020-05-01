@@ -2,7 +2,7 @@ public with sharing class AccountTriggerHandler extends OnInsertRocket {
   public AccountTriggerHandler(Set<SObject> newSet) {
     super(newSet);
   }
-  public void onBeforeFire() {
+  public void flyOnBefore() {
     for (SObject obj : newSet) {
       Account acct = (Account) obj;
       if (acct.BillingCity == null || acct.BillingCity.trim() == '') {
@@ -10,7 +10,7 @@ public with sharing class AccountTriggerHandler extends OnInsertRocket {
       }
     }
   }
-  public void onAfterFire() {
+  public void flyOnAfter() {
     Set<ID> acctIds = new Set<ID>();
     for (SObject obj : newSet) {
       acctIds.add(obj.Id);

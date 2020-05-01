@@ -8,5 +8,5 @@ public interface OnBeforeRocket extends Rocket {
   /**
    * Implement here your before trigger logic
    */
-  void onBeforeFire();
+  void flyOnBefore();
 }

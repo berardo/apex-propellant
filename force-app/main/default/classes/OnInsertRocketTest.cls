@@ -19,16 +19,16 @@ public class OnInsertRocketTest {
     Set<SObject> newSet = new Set<SObject>();
     OnInsertRocketImpl rocket = new OnInsertRocketImpl(newSet);
     System.assert(
-      rocket.canFire(TriggerOperation.BEFORE_INSERT, null),
+      rocket.canTakeOff(TriggerOperation.BEFORE_INSERT, null),
       'Can Fire on before insert'
     );
     System.assert(
-      rocket.canFire(TriggerOperation.AFTER_INSERT, null),
+      rocket.canTakeOff(TriggerOperation.AFTER_INSERT, null),
       'Can Fire on after insert'
     );
     System.assertEquals(
       false,
-      rocket.canFire(TriggerOperation.AFTER_UPDATE, null),
+      rocket.canTakeOff(TriggerOperation.AFTER_UPDATE, null),
       'Cannot Fire on after update'
     );
   }
@@ -40,10 +40,10 @@ public class OnInsertRocketTest {
     public OnInsertRocketImpl(Map<ID, SObject> newMap) {
       super(newMap);
     }
-    public void onBeforeFire() {
+    public void flyOnBefore() {
       System.debug('Test');
     }
-    public void onAfterFire() {
+    public void flyOnAfter() {
       System.debug('Test');
     }
     public Set<SObject> exposeSet() {

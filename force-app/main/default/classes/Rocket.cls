@@ -10,5 +10,5 @@ public interface Rocket {
    * @param propellant A version of the Propellant object for your references
    * @returns `Boolean` If false, your rocket won't fire off
    */
-  Boolean canFire(TriggerOperation fireWhen, Propellant propellant);
+  Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant);
 }

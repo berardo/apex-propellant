@@ -19,16 +19,16 @@ public class OnDeleteRocketTest {
     Set<SObject> oldSet = new Set<SObject>();
     OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldSet);
     System.assert(
-      rocket.canFire(TriggerOperation.BEFORE_DELETE, null),
+      rocket.canTakeOff(TriggerOperation.BEFORE_DELETE, null),
       'Can Fire on before delete'
     );
     System.assert(
-      rocket.canFire(TriggerOperation.AFTER_DELETE, null),
+      rocket.canTakeOff(TriggerOperation.AFTER_DELETE, null),
       'Can Fire on after delete'
     );
     System.assertEquals(
       false,
-      rocket.canFire(TriggerOperation.AFTER_UPDATE, null),
+      rocket.canTakeOff(TriggerOperation.AFTER_UPDATE, null),
       'Cannot Fire on after update'
     );
   }
@@ -40,10 +40,10 @@ public class OnDeleteRocketTest {
     public OnDeleteRocketImpl(Map<ID, SObject> oldMap) {
       super(oldMap);
     }
-    public void onBeforeFire() {
+    public void flyOnBefore() {
       System.debug('Test');
     }
-    public void onAfterFire() {
+    public void flyOnAfter() {
       System.debug('Test');
     }
     public Set<SObject> exposeSet() {

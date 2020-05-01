@@ -86,18 +86,18 @@ public with sharing class PropellantTest {
   }
 
   private class OnBeforeRocketTest implements OnBeforeRocket {
-    public void onBeforeFire() {
+    public void flyOnBefore() {
       System.debug('Test');
     }
-    public Boolean canFire(TriggerOperation fireWhen, Propellant propellant) {
+    public Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant) {
       return true;
     }
   }
   private class OnAfterRocketTest implements OnAfterRocket {
-    public void onAfterFire() {
+    public void flyOnAfter() {
       System.debug('Test');
     }
-    public Boolean canFire(TriggerOperation fireWhen, Propellant propellant) {
+    public Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant) {
       return true;
     }
   }

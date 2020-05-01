@@ -99,14 +99,14 @@ public with sharing class Propellant {
    * @returns `Propellant` new instance with the consumed state of its tank
    */
   public Propellant fireOff() {
-    if (canFireBeforeRocket()) {
-      beforeRocket.onBeforeFire();
-      if (tank != null && !canFireAfterRocket()) {
+    if (canTakeOffBeforeRocket()) {
+      beforeRocket.flyOnBefore();
+      if (tank != null && !canTakeOffAfterRocket()) {
         return new Propellant(beforeRocket, tank.consume());
       }
     }
-    if (canFireAfterRocket()) {
-      afterRocket.onAfterFire();
+    if (canTakeOffAfterRocket()) {
+      afterRocket.flyOnAfter();
       if (tank != null) {
         return new Propellant(afterRocket, tank.consume());
       }
@@ -115,15 +115,15 @@ public with sharing class Propellant {
     return this;
   }
 
-  private Boolean canFireBeforeRocket() {
+  private Boolean canTakeOffBeforeRocket() {
     return beforeRocket != null &&
       (Trigger.isExecuting && Trigger.isBefore && beforeRocket != null &&
-      ((Rocket) beforeRocket).canFire(Trigger.operationType, this) || skipForTestingPurposes);
+      ((Rocket) beforeRocket).canTakeOff(Trigger.operationType, this) || skipForTestingPurposes);
   }
 
-  private Boolean canFireAfterRocket() {
+  private Boolean canTakeOffAfterRocket() {
     return afterRocket != null &&
       (Trigger.isExecuting && Trigger.isAfter && afterRocket != null &&
-      ((Rocket) beforeRocket).canFire(Trigger.operationType, this) || skipForTestingPurposes);
+      ((Rocket) beforeRocket).canTakeOff(Trigger.operationType, this) || skipForTestingPurposes);
   }
 }
