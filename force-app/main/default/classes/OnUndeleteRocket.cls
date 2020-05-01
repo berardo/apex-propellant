@@ -3,11 +3,11 @@
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */
+@SuppressWarnings('PMD.EmptyStatementBlock')
 public abstract class OnUndeleteRocket implements OnAfterRocket {
   protected Set<SObject> newSet { get; private set; }
   protected Map<ID, SObject> newMap { get; private set; }
 
-  @SuppressWarnings('PMD.EmptyStatementBlock')
   public OnUndeleteRocket() {
   }
 
@@ -29,11 +29,17 @@ public abstract class OnUndeleteRocket implements OnAfterRocket {
 
   /**
    * Takes the TriggerOperation to fire off on `AFTER_UNDELETE`
-   * @param fireWhen System.TriggerOperation
+   * @param triggerWhen System.TriggerOperation
    * @param propellant Propellant object not in use here
    * @returns `Boolean`
    */
   public virtual Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
     return triggerWhen == TriggerOperation.AFTER_UNDELETE;
+  }
+
+  /**
+   * Dumb implementation of OnAfterRocket
+   */
+  public virtual void flyOnAfter() {
   }
 }

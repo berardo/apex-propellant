@@ -89,7 +89,7 @@ public with sharing class PropellantTest {
     public void flyOnBefore() {
       System.debug('Test');
     }
-    public Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant) {
+    public Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
       return true;
     }
   }
@@ -97,7 +97,7 @@ public with sharing class PropellantTest {
     public void flyOnAfter() {
       System.debug('Test');
     }
-    public Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant) {
+    public Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
       return true;
     }
   }

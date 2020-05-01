@@ -3,13 +3,13 @@
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */
+@SuppressWarnings('PMD.EmptyStatementBlock')
 public abstract class OnUpdateRocket implements OnBeforeRocket, OnAfterRocket {
   protected Set<SObject> newSet { get; private set; }
   protected Set<SObject> oldSet { get; private set; }
   protected Map<ID, SObject> newMap { get; private set; }
   protected Map<ID, SObject> oldMap { get; private set; }
 
-  @SuppressWarnings('PMD.EmptyStatementBlock')
   public OnUpdateRocket() {
   }
 
@@ -51,12 +51,24 @@ public abstract class OnUpdateRocket implements OnBeforeRocket, OnAfterRocket {
 
   /**
    * Takes the TriggerOperation to fire off on `BEFORE_UPDATE` and `AFTER_UPDATE`
-   * @param fireWhen System.TriggerOperation
+   * @param triggerWhen System.TriggerOperation
    * @param propellant Propellant object not in use here
    * @returns `Boolean`
    */
-  public virtual Boolean canFire(TriggerOperation triggerWhen, Propellant propellant) {
+  public virtual Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
     return triggerWhen == TriggerOperation.BEFORE_UPDATE ||
       triggerWhen == TriggerOperation.AFTER_UPDATE;
+  }
+
+  /**
+   * Dumb implementation of OnBeforeRocket
+   */
+  public virtual void flyOnBefore() {
+  }
+
+  /**
+   * Dumb implementation of OnAfterRocket
+   */
+  public virtual void flyOnAfter() {
   }
 }
