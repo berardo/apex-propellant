@@ -61,7 +61,7 @@ On the other hand, **Apex Propellant** is a simple alternative targeting the sam
 The intention is to make the analogy speak for itself.
 You have a trigger and you aim to get your rocket code flying around the space every time your trigger is ... triggered.
 
-That being said, as a real-world rocket, when your code takes off, it should not care about anything that was left off the ground. All the data that you need to decide what to do and where to go should be there with you.
+That being said, as a real-world rocket, when your code takes off, it should not care about anything that was left off on the ground. All the data that you need to decide what to do and where to go should be there with you.
 
 ### Show me the code!
 
@@ -73,7 +73,7 @@ trigger AccountTrigger on Account(before insert) {
 }
 ```
 
-In order to reach the stars, you also need a Propellant, which is a gas, fuel or artifact to reach what's called the [_Escape Velocity_](https://en.wikipedia.org/wiki/Escape_velocity). Therefore, your very next step is to build a `Propellant` object then fire it.
+In order to reach the stars, you also need a Propellant, which is the fuel and artifact used to reach what's called the [_Escape Velocity_](https://en.wikipedia.org/wiki/Escape_velocity). Therefore, your very next step is to build a `Propellant` object then fire it.
 
 ```java
 trigger AccountTrigger on Account(before insert) {
@@ -94,15 +94,15 @@ public class MyAmazingRocket extends OnInsertRocket {
 }
 ```
 
-The `OnInsertRocket` is an abstract class that implements the two important interfaces `OnBeforeRocket` and `OnAfterRocket` but leave it alone for now.
+The `OnInsertRocket` is an abstract class that implements the two important interfaces `OnBeforeRocket` and `OnAfterRocket` but leave them alone for now.
 
 The `flyOnBefore()` method is the only one called here because your trigger is `before insert` only. Propellant knows that and handles that for you, don't worry.
 
-Would that mean I could have done `flyOnAfter()` and expect it to run on `after trigger`?
+Would that mean I could have done `flyOnAfter()` and expect it to fly on `after trigger`?
 
 Hey, you're smart! ... and you're right!
 
-Alternatively you could do it:
+Alternatively, you could do this:
 
 ```java
 public class MyAmazingRocket implements OnBeforeRocket {
@@ -158,7 +158,7 @@ If you didn't spot the difference, now we passed the same rocket instance twice.
 
 I think you got the point. So let's move on to the Rocket hierarchy and finally expain the little `canTakeOff` kid.
 
-## The Rocket hierarchy
+## The Rocket Hierarchy
 
 There's one generic interface called `Rocket` that exposes what every rocket needs to do. Fortunatelly it's just one single method:
 ```java
@@ -184,7 +184,7 @@ Conversely, when you directly implement the two interfaces, there's no Insert/Up
 
 ### Abstract classes
 
-There are four abstract classes that implement the two Rocket interfaces to allow rockets to fly on all trigger operations.
+There are four abstract classes that implement the two `Rocket` interfaces to allow rockets to fly on all trigger operations.
 
 The image below presents those classes so feel free to extend them to create your own rockets.
 
@@ -192,7 +192,6 @@ The image below presents those classes so feel free to extend them to create you
 
 The table below summarises what operations are achieved by what classes.
 
-----------------------------------------------------------------------------
 | Operation  | TriggerOperations   | Rocket class       | Rocket Interface |
 |------------|---------------------|--------------------|------------------|
 | `insert`   | `BEFORE_INSERT`     | `OnInsertRocket`   | OnBeforeRocket   |
@@ -202,6 +201,48 @@ The table below summarises what operations are achieved by what classes.
 | `delete`   | `BEFORE_DELETE`     | `OnDeleteRocket`   | OnBeforeRocket   |
 |            | `AFTER_DELETE`      |                    | OnAfterRocket    |
 | `undelete` | `AFTER_UNDELETE`    | `OnUndeleteRocket` | OnAfterRocket    |
-----------------------------------------------------------------------------
 
-Before and after operations are always part of the same transaction so chances
+
+Before and after operations are always part of the same transaction, hence making them behaviour of the same object most of the time makes total sense. However, there's nothing stopping you from having two separate classes and fire two completely distinct rockets.
+
+When it comes to DML operations though, the likelyhood of having one single object handling operations across four distinct operations is arguably lower. I've witnessed fairly common applications of _TriggerHandler_ with a clear problem of separation of concerns as it all starts from a class where you are able to override methods for all DML operations, which is rarely applicable.
+
+That being said, what's not rare is the fair intention to run the exact same behaviour across different DML operation, like on before insert and before update, for example. If this is your case, unfortunately you cannot extend two classes, so, in this case, the main interfaces are the only way to go.
+
+## Trigger Payload
+
+You might be missing the collections of saved or deleted records found in `Trigger.new`, `Trigger.old`, `Trigger.newMap`, and `Trigger.oldMap`. Well, when you directly implement the interfaces, it's totally up to you. But when you extend an abstract class, you can pass them up through its constructor, like below:
+
+```java
+public class MyAmazingRocket extends OnInsertRocket {
+  public MyAmazingRocket(Set<SObject> newSet) {
+    super(newSet);
+  }
+  public void flyOnBefore() {
+    System.debug('Yay, my 🚀 has gone through the ⛅️ on its way to the ✨');
+    System.debug('See my first record ID: ' + this.newSet.get(0).Id);
+  }
+}
+```
+
+Once you pass the argument through `super(newSet)`, you can retrive the information back using the internal attribute `newSet`.
+
+* Using `super(Set<SObject>)` you have `this.newSet`
+* Using `super(Set<SObject>, Set<SObject)` you have respectively `this.newSet` and `this.oldSet`
+* Using `super(Map<ID, SObject>)` you have `this.newMap`
+* Using `super(Map<ID, SObject>, Map<ID, SObject>)` you have respectively `this.newMap` and `this.oldMap`
+
+Of course you need set everything up on your trigger:
+
+```java
+trigger AccountTrigger on Account(before insert) {
+  OnBeforeRocket rocket = new MyAmazingRocket(Trigger.new);
+}
+```
+
+Although it might seem I left this burden on your shoulders, as I could have accessed `Trigger.*` within the abstract classes, I can't stress enough how bad this practice would be. Think on a rocket taking off hooked to an anchor left on the ground.
+
+New and old sets and maps belong to the trigger, and having an object with explicit dependency on `System.Trigger` makes it completely not unit testable as the only way to have something like `Trigger.new` populated it by saving a record.
+
+**Remember:** Every time you need to store data before testing your code, you are **NOT** unit testing, you are actually running an integration test. Moreover, despite the importance of integration tests, you code should always be tested in isolation, which is the soul of unit tests.
+
