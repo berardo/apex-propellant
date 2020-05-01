@@ -1,4 +1,30 @@
 /**
+ *
+ *         ^
+ *        / \
+ *       /___\
+ *      |=   =|
+ *      |  _  |
+ *      | (_) |
+ *      |     |
+ *      |  _  |
+ *     /| (_) |\   
+ *    / |     | \  
+ *   /  |##!##|  \ 
+ *  |  /|##!##|\  |
+ *  | / |##!##| \ |
+ *  |/   ^ | ^   \|
+ *       ( | )
+ *      ((   ))
+ *     (( pro ))
+ *     (( pel ))
+ *     (( lan ))
+ *      (( t ))
+ *       (( ))
+ *        ( )
+ *         .
+ *         .
+ *
  * Main object that fires off before and after trigger rockets.
  * @author Jose Berardo Cunha
  * @since 30/04/2020

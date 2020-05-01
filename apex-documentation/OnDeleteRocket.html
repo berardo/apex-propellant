@@ -127,30 +127,24 @@
 
           <div class="section">
 
-            <h2 class="class-title top-level-type" id="Tank">
-              <span>Tank</span>
+            <h2 class="class-title top-level-type" id="OnDeleteRocket">
+              <span>OnDeleteRocket</span>
             </h2>
             <div class="class-container">
 
               <div class="class-description">
-                Object with defined capacity that can be consumed by propellant fires
+                Partial implementation of Delete rockets (before and after)
               </div>
               <div class="class-subtitle">
                 Signature
               </div>
 
               <div class="class-signature">
-                public class Tank
-              </div>
-              <div class="class-subtitle">
-                See
-              </div>
-              <div class="class-subtitle-description">
-                <a href="javascript:void(0)" onclick="goToLocation('Propellant.html')">Propellant</a>
+                public abstract class OnDeleteRocket implements OnBeforeRocket, OnAfterRocket
               </div><br />Jose Berardo Cunha<br />30/04/2020
             </div>
-            <div class="subsection properties Tank">
-              <h3 class="subsection-title properties">Tank Properties</h2>
+            <div class="subsection properties OnDeleteRocket">
+              <h3 class="subsection-title properties">OnDeleteRocket Properties</h2>
                 <table class="attributes-table properties">
 
                   <tr>
@@ -160,20 +154,20 @@
 
                   </tr>
                   <tr class="property ">
-                    <td class="attribute-name"><span>capacity</span></td>
+                    <td class="attribute-name"><span>oldMap</span></td>
                     <td>
                       <div class="attribute-signature">
-                        public Integer capacity
+                        protected Map&lt;ID, SObject&gt; oldMap
                       </div>
                     </td>
 
 
                   </tr>
                   <tr class="property ">
-                    <td class="attribute-name"><span>consumed</span></td>
+                    <td class="attribute-name"><span>oldSet</span></td>
                     <td>
                       <div class="attribute-signature">
-                        public Integer consumed
+                        protected Set&lt;SObject&gt; oldSet
                       </div>
                     </td>
 
@@ -182,188 +176,131 @@
                 </table>
             </div>
             <div class="subsection methods">
-              <h3 class="subsection-title methods">Tank Constructors</h3>
+              <h3 class="subsection-title methods">OnDeleteRocket Constructors</h3>
               <div class="methods-container">
                 <ul class="methods-toc">
-                  <li class="method public">
-                    <a class="methods-toc__entry " href="#Tank.Tank">
-                      Tank (capacity, consumed)
-                    </a>
-
-                    <div class="methods-toc__description">
-                      Creates a tank with defined capacity and consumed amount
-                    </div>
-                  </li>
-                  <li class="method public">
-                    <a class="methods-toc__entry " href="#Tank.Tank_1">
-                      Tank (capacity)
-                    </a>
-
-                    <div class="methods-toc__description">
-                      Creates a tank with defined capacity and 0 on consumed
-                    </div>
-                  </li>
-                  <li class="method public">
-                    <a class="methods-toc__entry " href="#Tank.Tank_2">
-                      Tank ()
-                    </a>
-
-                    <div class="methods-toc__description">
-                      Creates a tank with capacity of 5 and consumed of 0
-                    </div>
-                  </li>
                   <li class="method private">
-                    <a class="methods-toc__entry " href="#Tank.Tank_3">
-                      Tank ()
+                    <a class="methods-toc__entry " href="#OnDeleteRocket.OnDeleteRocket">
+                      OnDeleteRocket ()
                     </a>
 
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnDeleteRocket.OnDeleteRocket_1">
+                      OnDeleteRocket (oldSet)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Creates an OnDeleteRocket with a Set of Objects
+                    </div>
+                  </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnDeleteRocket.OnDeleteRocket_2">
+                      OnDeleteRocket (oldMap)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Creates an OnUpdateRocket with a Map of Id -&gt; Objects
+                    </div>
                   </li>
                 </ul>
-                <div class="method public">
-                  <h4 class="method-title " id="Tank.Tank">
-                    <span>Tank(capacity, consumed)</span>
-                  </h4>
-                  <div class="method-description">
-                    Creates a tank with defined capacity and consumed amount
-                  </div>
-                  <div class="method-subtitle">
-                    Signature
-                  </div>
-
-                  <div class="method-signature">
-                    public Tank(Integer capacity, Integer consumed)
-                  </div>
-                  <div class="method-subtitle">Parameters</div>
-                  <div class="param-name">capacity</div>
-                  <div class="param-type">
-                    Type: <code class="code-inline">Integer</code>
-                  </div>
-                  <div class="param-description">Size of the tank</div>
-                  <div class="param-name">consumed</div>
-                  <div class="param-type">
-                    Type: <code class="code-inline">Integer</code>
-                  </div>
-                  <div class="param-description">Parts of the tank already used</div>
-                </div>
-                <div class="method public">
-                  <h4 class="method-title " id="Tank.Tank_1">
-                    <span>Tank(capacity)</span>
-                  </h4>
-                  <div class="method-description">
-                    Creates a tank with defined capacity and 0 on consumed
-                  </div>
-                  <div class="method-subtitle">
-                    Signature
-                  </div>
-
-                  <div class="method-signature">
-                    public Tank(Integer capacity)
-                  </div>
-                  <div class="method-subtitle">Parameters</div>
-                  <div class="param-name">capacity</div>
-                  <div class="param-type">
-                    Type: <code class="code-inline">Integer</code>
-                  </div>
-                  <div class="param-description">Size of the tank</div>
-                </div>
-                <div class="method public">
-                  <h4 class="method-title " id="Tank.Tank_2">
-                    <span>Tank()</span>
-                  </h4>
-                  <div class="method-description">
-                    Creates a tank with capacity of 5 and consumed of 0
-                  </div>
-                  <div class="method-subtitle">
-                    Signature
-                  </div>
-
-                  <div class="method-signature">
-                    public Tank()
-                  </div>
-                </div>
                 <div class="method private">
-                  <h4 class="method-title " id="Tank.Tank_3">
-                    <span>Tank()</span>
+                  <h4 class="method-title " id="OnDeleteRocket.OnDeleteRocket">
+                    <span>OnDeleteRocket()</span>
                   </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+                  <div class="method-annotations">@SuppressWarnings('PMD.EmptyStatementBlock')</div>
+                  <div class="method-signature">
+                    private OnDeleteRocket()
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnDeleteRocket.OnDeleteRocket_1">
+                    <span>OnDeleteRocket(oldSet)</span>
+                  </h4>
+                  <div class="method-description">
+                    Creates an OnDeleteRocket with a Set of Objects
+                  </div>
                   <div class="method-subtitle">
                     Signature
                   </div>
 
                   <div class="method-signature">
-                    return new Tank(capacity, consumed + 1)
+                    public OnDeleteRocket(Set&lt;SObject&gt; oldSet)
                   </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">oldSet</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Set&lt;SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Set of SObjects expected to be passed (e.g. Trigger.old)</div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnDeleteRocket.OnDeleteRocket_2">
+                    <span>OnDeleteRocket(oldMap)</span>
+                  </h4>
+                  <div class="method-description">
+                    Creates an OnUpdateRocket with a Map of Id -&gt; Objects
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public OnDeleteRocket(Map&lt;ID, SObject&gt; oldMap)
+                  </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">oldMap</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Map&lt;ID, SObject&gt;</code>
+                  </div>
+                  <div class="param-description">Map of Id -&gt; SObject expecteds to be passed (e.g. Trigger.oldMap)</div>
                 </div>
               </div>
             </div>
             <div class="subsection methods">
-              <h3 class="subsection-title methods">Tank Methods</h3>
+              <h3 class="subsection-title methods">OnDeleteRocket Methods</h3>
               <div class="methods-container">
                 <ul class="methods-toc">
                   <li class="method public">
-                    <a class="methods-toc__entry " href="#Tank.consume">
-                      consume ()
+                    <a class="methods-toc__entry " href="#OnDeleteRocket.canFire">
+                      canFire (triggerWhen, propellant)
                     </a>
 
                     <div class="methods-toc__description">
-                      Creates a new tank instance with one up consumed level
-                    </div>
-                  </li>
-                  <li class="method public">
-                    <a class="methods-toc__entry " href="#Tank.isEmpty">
-                      isEmpty ()
-                    </a>
-
-                    <div class="methods-toc__description">
-                      Checks if the tanks has been totally consumed
+                      Takes the TriggerOperation to fire off on <code class="code-inline">BEFORE_DELETE</code> and <code class="code-inline">AFTER_DELETE</code>
                     </div>
                   </li>
                 </ul>
                 <div class="method public">
-                  <h4 class="method-title " id="Tank.consume">
-                    <span>consume()</span>
+                  <h4 class="method-title " id="OnDeleteRocket.canFire">
+                    <span>canFire(triggerWhen, propellant)</span>
                   </h4>
                   <div class="method-description">
-                    Creates a new tank instance with one up consumed level
+                    Takes the TriggerOperation to fire off on <code class="code-inline">BEFORE_DELETE</code> and <code class="code-inline">AFTER_DELETE</code>
                   </div>
                   <div class="method-subtitle">
                     Signature
                   </div>
 
                   <div class="method-signature">
-                    public Tank consume()
+                    public virtual Boolean canFire(TriggerOperation triggerWhen, Propellant propellant)
                   </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">fireWhen</div>
+                  <div class="param-description">System.TriggerOperation</div>
+                  <div class="param-name">propellant</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Propellant</code>
+                  </div>
+                  <div class="param-description">Propellant object not in use here</div>
                   <div class="method-subtitle">
                     Returns
                   </div>
                   <div class="method-subtitle-description">
-                    <code class="code-inline">Tank</code> new instance
-                  </div>
-                  <div class="method-subtitle">
-                    Exceptions
-                  </div>
-                  <div class="method-subtitle-description">
-                    EmptyTankException if there&#39;s nothing left on the tank
-                  </div>
-                </div>
-                <div class="method public">
-                  <h4 class="method-title " id="Tank.isEmpty">
-                    <span>isEmpty()</span>
-                  </h4>
-                  <div class="method-description">
-                    Checks if the tanks has been totally consumed
-                  </div>
-                  <div class="method-subtitle">
-                    Signature
-                  </div>
-
-                  <div class="method-signature">
-                    public boolean isEmpty()
-                  </div>
-                  <div class="method-subtitle">
-                    Returns
-                  </div>
-                  <div class="method-subtitle-description">
-                    <code class="code-inline">boolean</code>
+                    <code class="code-inline">Boolean</code>
                   </div>
                 </div>
               </div>

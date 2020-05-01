@@ -124,15 +124,75 @@
       </tr>
       <tr>
         <td class="doc-page">
-          <h2 class='section-title'>Home</h2>
-          <h2>
-            Project Home
-          </h2>
-          <p>
-            Use the <code class="code-inline">apexdox.homePagePath</code> setting
-            to point to an HTML file that contains details about your project.
-            The body of the HTML will show up here instead of this default!
-          </p>
+
+          <div class="section">
+
+            <h2 class="class-title top-level-type" id="Rocket">
+              <span>Rocket</span>
+            </h2>
+            <div class="class-container">
+
+              <div class="class-description">
+                Defines what all 🚀 have to do
+              </div>
+              <div class="class-subtitle">
+                Signature
+              </div>
+
+              <div class="class-signature">
+                public interface Rocket
+              </div><br />Jose Berardo Cunha<br />30/04/2020
+            </div>
+            <div class="subsection methods">
+              <h3 class="subsection-title methods">Rocket Methods</h3>
+              <div class="methods-container">
+                <ul class="methods-toc">
+                  <li class="method ">
+                    <a class="methods-toc__entry " href="#Rocket.canFire">
+                      canFire (fireWhen, propellant)
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Define your own logic to decide if your rocket is good to go
+                    </div>
+                  </li>
+                </ul>
+                <div class="method ">
+                  <h4 class="method-title " id="Rocket.canFire">
+                    <span>canFire(fireWhen, propellant)</span>
+                  </h4>
+                  <div class="method-description">
+                    Define your own logic to decide if your rocket is good to go
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    Boolean canFire(TriggerOperation fireWhen, Propellant propellant)
+                  </div>
+                  <div class="method-subtitle">Parameters</div>
+                  <div class="param-name">fireWhen</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">TriggerOperation</code>
+                  </div>
+                  <div class="param-description">A System.TriggerOperation to let you know when your rocket is being fired off</div>
+                  <div class="param-name">propellant</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">Propellant</code>
+                  </div>
+                  <div class="param-description">A version of the Propellant object for your references</div>
+                  <div class="method-subtitle">
+                    Returns
+                  </div>
+                  <div class="method-subtitle-description">
+                    <code class="code-inline">Boolean</code> If false, your rocket won&#39;t fire off
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </td>
       </tr>
       <tr>

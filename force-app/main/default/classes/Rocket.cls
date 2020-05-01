@@ -1,5 +1,5 @@
 /**
- * Defines what all rockets have to do
+ * Defines what all 🚀 have to do
  * @author Jose Berardo Cunha
  * @since 30/04/2020
  */

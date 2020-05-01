@@ -1,7 +1,33 @@
 # Apex Propellant
 
-An Elegant Object oriented alternative to Apex trigger handling.
+An _Elegant Object_ oriented alternative to Apex trigger handling.
 
+```
+       ^
+      / \
+     /___\
+    |=   =|
+    |  _  |
+    | (_) |
+    |     |
+    |  _  |
+   /| (_) |\   
+  / |     | \  
+ /  |##!##|  \ 
+|  /|##!##|\  |
+| / |##!##| \ |
+|/   ^ | ^   \|
+     ( | )
+    ((   ))
+   (( pro ))
+   (( pel ))
+   (( lan ))
+    (( t ))
+     (( ))
+      ( )
+       .
+       .
+```
 **Deploy to SFDX Scratch Org:**
 [![Deploy](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com)
 
