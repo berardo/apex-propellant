@@ -9,10 +9,10 @@ An _Elegant Object_ oriented alternative solution to Apex trigger handling. It's
     |=   =|
     |  _  |
     | (_) |
-    |     |
     |  _  |
-   /| (_) |\   
-  / |     | \  
+    | (_) |
+   /|     |\   
+  / |=   =| \  
  /  |##!##|  \ 
 |  /|##!##|\  |
 | / |##!##| \ |
@@ -91,7 +91,6 @@ public class MyAmazingRocket extends OnInsertRocket {
   public void flyOnBefore() {
     System.debug('Yay, my 🚀 has gone through the ⛅️ on its way to the ✨');
   }
-  public void flyOnAfter() {}
 }
 ```
 
@@ -99,7 +98,7 @@ The `OnInsertRocket` is an abstract class that implements the two important inte
 
 The `flyOnBefore()` method is the only one called here because your trigger is `before insert` only. Propellant knows that and handles that for you, don't worry.
 
-But why am I declaring `flyOnAfter()` if I don't need it?
+Would that mean I could have done `flyOnAfter()` and expect it to run on `after trigger`?
 
 Hey, you're smart! ... and you're right!
 
@@ -110,7 +109,7 @@ public class MyAmazingRocket implements OnBeforeRocket {
   public void flyOnBefore() {
     System.debug('Yay, my 🚀 has gone through the ⛅️ on its way to the ✨');
   }
-  public Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant) {
+  public Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
     return true;
   }
 }
@@ -127,7 +126,7 @@ public class MyAmazingRocket implements OnAfterRocket {
   public void flyOnAfter() {
     System.debug('Yay, my 🚀 is reaching the 🌚');
   }
-  public Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant) {
+  public Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
     return true;
   }
 }
@@ -142,7 +141,7 @@ public class MyAmazingRocket implements OnAfterRocket {
   public void flyOnAfter() {
     System.debug('Yay, my 🚀 is reaching the 🌚');
   }
-  public Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant) {
+  public Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
     return true;
   }
 }
@@ -150,7 +149,7 @@ public class MyAmazingRocket implements OnAfterRocket {
 There's only one little thing to change when your rocket wants to take off twice in a single transaction (on before and on after triggers), you need to let `Propellant` know. Again, it's so easy:
 
 ```java
-trigger AccountTrigger on Account(before insert) {
+trigger AccountTrigger on Account(before insert, after insert) {
   OnBeforeRocket rocket = new MyAmazingRocket(); // 5, 4, 3, 2, 1 ...
   new Propellant(rocket, rocket).fireOff(); // Can you hear the sound? 🚀
 }
@@ -159,12 +158,12 @@ If you didn't spot the difference, now we passed the same rocket instance twice.
 
 I think you got the point. So let's move on to the Rocket hierarchy and finally expain the little `canTakeOff` kid.
 
-### The Rocket hierarchy
+## The Rocket hierarchy
 
 There's one generic interface called `Rocket` that exposes what every rocket needs to do. Fortunatelly it's just one single method:
 ```java
 public interface Rocket {
-  Boolean canTakeOff(TriggerOperation fireWhen, Propellant propellant);
+  Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant);
 }
 
 ```
@@ -183,3 +182,26 @@ As you can imagine, the class `OnInsertRocket`, used on the very first implement
 
 Conversely, when you directly implement the two interfaces, there's no Insert/Update/Delete/Undelete context involved. You're free to decide. Can you now see why `canTakeOff` receives a `TriggerOperation`?
 
+### Abstract classes
+
+There are four abstract classes that implement the two Rocket interfaces to allow rockets to fly on all trigger operations.
+
+The image below presents those classes so feel free to extend them to create your own rockets.
+
+![Rocket interface hierarchy](images/Rocket-Interfaces-Abstracts.png)
+
+The table below summarises what operations are achieved by what classes.
+
+----------------------------------------------------------------------------
+| Operation  | TriggerOperations   | Rocket class       | Rocket Interface |
+|------------|---------------------|--------------------|------------------|
+| `insert`   | `BEFORE_INSERT`     | `OnInsertRocket`   | OnBeforeRocket   |
+|            | `AFTER_INSERT`      |                    | OnAfterRocket    |
+| `update`   | `BEFORE_UPDATE`     | `OnUpdateRocket`   | OnBeforeRocket   |
+|            | `AFTER_UPDATE`      |                    | OnAfterRocket    |
+| `delete`   | `BEFORE_DELETE`     | `OnDeleteRocket`   | OnBeforeRocket   |
+|            | `AFTER_DELETE`      |                    | OnAfterRocket    |
+| `undelete` | `AFTER_UNDELETE`    | `OnUndeleteRocket` | OnAfterRocket    |
+----------------------------------------------------------------------------
+
+Before and after operations are always part of the same transaction so chances
