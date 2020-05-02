@@ -1,6 +1,6 @@
 # Apex Propellant
 
-An _Elegant Object_ oriented alternative solution to Apex trigger handling. It's not rocket science, I promise.
+An _Elegant Object_ oriented alternative solution for Apex trigger handling. It's not rocket science, I promise.
 
 ```
        ^
@@ -82,7 +82,7 @@ trigger AccountTrigger on Account(before insert) {
 }
 ```
 
-### How should my rocket look like?
+### What should my rocket look like?
 
 The bare minimum code you write to make the trigger above thrust your rocket up in the space is like below:
 
@@ -209,11 +209,11 @@ The table below summarises what operations are achieved by what classes.
 |            | `AFTER_DELETE`    |                    | OnAfterRocket    |
 | `undelete` | `AFTER_UNDELETE`  | `OnUndeleteRocket` | OnAfterRocket    |
 
-Before and after operations are always part of the same transaction, hence making them behaviour of the same object most of the time makes total sense. However, there's nothing stopping you from having two separate classes and fire two completely distinct rockets.
+Before and after operations are always part of the same transaction, hence making them behaviour of the same object makes total sense most of the time. However, there's nothing stopping you from having two separate classes and fire two completely distinct rockets.
 
 When it comes to DML operations though, the likelyhood of having one single object handling operations across four distinct operations is arguably lower. I've witnessed fairly common applications of _TriggerHandler_ with a clear problem of separation of concerns as it all starts from a class where you are able to override methods for all DML operations, which is rarely applicable.
 
-That being said, what's not rare is the fair intention to run the exact same behaviour across different DML operation, like on before insert and before update, for example. If this is your case, unfortunately you cannot extend two classes, so, in this case, the main interfaces are the only way to go.
+That being said, what's not rare is the fair intention to run the exact same behaviour across different DML operations, like `before insert, before update`, for example. If this is your case, unfortunately you cannot extend two classes, so the main interfaces are your best friends.
 
 ## Trigger Payload
 
@@ -271,13 +271,13 @@ trigger AccountTrigger on Account(before insert) {
 - Am I launching a rocket for the appropriate operation?
 - Does my rocket return true via `canTakeOff`? And here `propellant.tank` can be acessed!
 
-Having those questions cleared, and after running the rocket's flight method, Propellant also runs `tank.consume()`, which either returns another `Tank` instance with an incremented `consumed` state or raise an `EmptyTankException` when the `consumed` amount reaches its `capacity`. Finally, `fireOff()` returns a new `Propellant` instance with the existing rockets and the more consumed instance of its tank.
+Having those questions cleared, and after running the rocket's flight method, Propellant also runs `tank.consume()`, which either returns another `Tank` instance with an incremented `consumed` state or raises an `EmptyTankException` when the `consumed` amount reaches its `capacity`. Finally, `fireOff()` returns a new `Propellant` instance with the existing rockets and the more consumed instance of its tank.
 
 ## Immutability
 
 One of beauties of object oriented programming is the hability to combine objects as living things, i.e. not only cold data structures, with the predictability of state immutability.
 
-That means, objects should avoid changing its state during the course of their "lives".
+That means, objects should avoid changing their state during the course of their "lives".
 
 And that's what happens to this Apex Propellant library. For instance, you cannot change a `Tank`'s state like below:
 
@@ -304,60 +304,3 @@ As `Tank` is immutable (it also applies to `Propellant`, and I encourage you to 
 
 Rather than changing the internal `consumed` state, `Tank.consume()` return another `Tank` instance with the mentioned attribute modified. When you call `Propellant.fireOff()` you should expect to have another `Propellant` state with the +1 consumed `Tank`.
 
-### Max execution count
-
-With `Tank`, there are a number ways you can limit how many times your rocket will repeatedly execute. Let's have a look at one of them:
-
-First, let's move away from the trigger:
-
-```java
-trigger AccountTrigger on Account(after update) {
-  LaunchSite.manageRocketLaunch(Trigger.newMap);
-}
-```
-
-Although still dealing with `static` methods, which is something I suggest you to avoid as much as you can, `LaunchSite` is more capable of controlling execution repetitions than a poor procedural trigger.
-
-Before introduce you the `LaunchSite` itself, after all this is top secret, let me show a rocket example:
-
-```java
-public class MyNotSoAmazingRocket implements OnAfterRocket {
-  private Map<ID, Account> accountMap;
-  public MyNotSoAmazingRocket(Map<ID, Account> accountMap) {
-    this.accountMap = accountMap;
-  }
-  public void flyOnAfter() {
-    List<Account> accts = [SELECT Whatever__c FROM Account WHERE Id IN :newMap.keySet()];
-    for (Account acct : accts) {
-      acct.Whatever__c = 'Whatever 🤷‍♀️';
-    }
-    update accts;
-  }
-  public Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
-    return propellant.tank.isEmpty();
-  }
-}
-```
-
-_Please don't mind the mess, this misplaced SOQL query is just for learning purposes._
-
-`MyNotSoAmazingRocket` is just a silly example of anything we want to execute every time accounts are updated. For any reason, it updates accounts again, which will end up recursively re-triggering `AccountTrigger`.
-
-As we know that, we set a limit that's basically saying, if there's any propellant left on the tank, we `canTakeOff`, otherwise don't make recursive calls indefinitely.
-
-Now let's see the `LaunchSite`
-
-```java
-public class LaunchSite {
-  private static Propellant propellant = new Propellant(
-    new MyAmazingRocket(Trigger.newMap),
-    new Tank(5)
-  );
-
-  public static void manageRocketLaunch() {
-    if (!propellant.tank.isEmpty()) {
-      propellant = propellant.fireOff();
-    }
-  }
-}
-```
