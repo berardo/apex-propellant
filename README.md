@@ -249,9 +249,9 @@ trigger AccountTrigger on Account(before insert) {
 
 Although it might seem I left this burden on your shoulders, as I could have accessed `Trigger.*` within the abstract classes, I can't stress enough how bad this practice would be. Think on a rocket taking off hooked to an anchor left on the ground.
 
-New and old sets and maps belong to the trigger, and having an object with explicit dependency on `System.Trigger` makes it completely not unit testable as the only way to have something like `Trigger.new` populated it by saving a record.
+New and old sets and maps belong to the trigger, and having an object with explicit dependency on `System.Trigger` makes it completely not unit testable as the only way to have something like `Trigger.new` populated is by saving a record.
 
-**Remember:** Every time you need to store data before testing your code, you are **NOT** unit testing, you are actually running an integration test. Moreover, despite the importance of integration tests, you code should always be tested in isolation, which is the soul of unit tests.
+**Remember:** Every time you need to store data before testing your code, you are **NOT** unit testing, you are actually running an integration test. Moreover, despite the importance of integration tests, your code should always be tested in isolation, which is the soul of unit tests.
 
 ## Propellant's Tank
 
@@ -297,7 +297,7 @@ Tank t2 = new Tank(10); // capacity is 10
 SomewhereElse.doSomething(t1, t2);
 // If Tank was mutable, this would no longer be guaranteed
 System.assert(5, t1.capacity, 'The expected capacity is 5');
-System.assert(10, t1.capacity, 'The expected capacity is 10');
+System.assert(10, t2.capacity, 'The expected capacity is 10');
 ```
 
 As `Tank` is immutable (it also applies to `Propellant`, and I encourage you to do the same with your rockets), the code above is always guaranteed.
