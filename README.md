@@ -11,9 +11,9 @@ An _Elegant Object_ oriented alternative solution to Apex trigger handling. It's
     | (_) |
     |  _  |
     | (_) |
-   /|     |\   
-  / |=   =| \  
- /  |##!##|  \ 
+   /|     |\
+  / |=   =| \
+ /  |##!##|  \
 |  /|##!##|\  |
 | / |##!##| \ |
 |/   ^ | ^   \|
@@ -28,12 +28,12 @@ An _Elegant Object_ oriented alternative solution to Apex trigger handling. It's
        .
        .
 ```
+
 **Deploy to SFDX Scratch Org:**
 [![Deploy to SFDX](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com)
 
 **Deploy to Salesforce Org:**
 [![Deploy to Salesforce](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png)](https://githubsfdeploy.herokuapp.com/?owner=berardo&repo=apex-propellant&ref=master)
-
 
 ## Overview
 
@@ -84,7 +84,7 @@ trigger AccountTrigger on Account(before insert) {
 
 ### How should my rocket look like?
 
-The bare minimum code you write to make the trigger above throw your rocket up in the space is like below:
+The bare minimum code you write to make the trigger above thrust your rocket up in the space is like below:
 
 ```java
 public class MyAmazingRocket extends OnInsertRocket {
@@ -114,6 +114,7 @@ public class MyAmazingRocket implements OnBeforeRocket {
   }
 }
 ```
+
 Like I said before, even though the previous example introduced an abstract class, you ended up writing slightly less than now.
 
 In order to fly on `before insert` trigger, your rocket only needs to implement `OnBeforeRocket`, which requires you to implement your proper flight (`flyOnBefore`) and another method that I'm gonna explain on the next section. Bear with me!
@@ -121,6 +122,7 @@ In order to fly on `before insert` trigger, your rocket only needs to implement 
 You might be asking (btw, you ask a lot, I like that 😍!), what about `after insert`?
 
 Easy:
+
 ```java
 public class MyAmazingRocket implements OnAfterRocket {
   public void flyOnAfter() {
@@ -133,6 +135,7 @@ public class MyAmazingRocket implements OnAfterRocket {
 ```
 
 I know, I know ... you can have both:
+
 ```java
 public class MyAmazingRocket implements OnAfterRocket {
   public void flyOnBefore() {
@@ -146,6 +149,7 @@ public class MyAmazingRocket implements OnAfterRocket {
   }
 }
 ```
+
 There's only one little thing to change when your rocket wants to take off twice in a single transaction (on before and on after triggers), you need to let `Propellant` know. Again, it's so easy:
 
 ```java
@@ -154,6 +158,7 @@ trigger AccountTrigger on Account(before insert, after insert) {
   new Propellant(rocket, rocket).fireOff(); // Can you hear the sound? 🚀
 }
 ```
+
 If you didn't spot the difference, now we passed the same rocket instance twice.
 
 I think you got the point. So let's move on to the Rocket hierarchy and finally expain the little `canTakeOff` kid.
@@ -161,12 +166,14 @@ I think you got the point. So let's move on to the Rocket hierarchy and finally 
 ## The Rocket Hierarchy
 
 There's one generic interface called `Rocket` that exposes what every rocket needs to do. Fortunatelly it's just one single method:
+
 ```java
 public interface Rocket {
   Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant);
 }
 
 ```
+
 `canTakeOff` gives you the hability to decide whether your rocket will fly or not. The `Propellant` object always asks whether your rocket is ready or not and passes a `System.TriggerOperation` representing the trigger moment, and also its own state in case you need it (we'll see more on this further down when we discuss the rocket `Tank`).
 
 On the trigger example above, `Propellant` would run something like this: `rocket.canTakeOff(TriggerOperation.BEFORE_INSERT, this);` and would move on only if this call returns `true`.
@@ -192,16 +199,15 @@ The image below presents those classes so feel free to extend them to create you
 
 The table below summarises what operations are achieved by what classes.
 
-| Operation  | TriggerOperations   | Rocket class       | Rocket Interface |
-|------------|---------------------|--------------------|------------------|
-| `insert`   | `BEFORE_INSERT`     | `OnInsertRocket`   | OnBeforeRocket   |
-|            | `AFTER_INSERT`      |                    | OnAfterRocket    |
-| `update`   | `BEFORE_UPDATE`     | `OnUpdateRocket`   | OnBeforeRocket   |
-|            | `AFTER_UPDATE`      |                    | OnAfterRocket    |
-| `delete`   | `BEFORE_DELETE`     | `OnDeleteRocket`   | OnBeforeRocket   |
-|            | `AFTER_DELETE`      |                    | OnAfterRocket    |
-| `undelete` | `AFTER_UNDELETE`    | `OnUndeleteRocket` | OnAfterRocket    |
-
+| Operation  | TriggerOperations | Rocket class       | Rocket Interface |
+| ---------- | ----------------- | ------------------ | ---------------- |
+| `insert`   | `BEFORE_INSERT`   | `OnInsertRocket`   | OnBeforeRocket   |
+|            | `AFTER_INSERT`    |                    | OnAfterRocket    |
+| `update`   | `BEFORE_UPDATE`   | `OnUpdateRocket`   | OnBeforeRocket   |
+|            | `AFTER_UPDATE`    |                    | OnAfterRocket    |
+| `delete`   | `BEFORE_DELETE`   | `OnDeleteRocket`   | OnBeforeRocket   |
+|            | `AFTER_DELETE`    |                    | OnAfterRocket    |
+| `undelete` | `AFTER_UNDELETE`  | `OnUndeleteRocket` | OnAfterRocket    |
 
 Before and after operations are always part of the same transaction, hence making them behaviour of the same object most of the time makes total sense. However, there's nothing stopping you from having two separate classes and fire two completely distinct rockets.
 
@@ -227,10 +233,10 @@ public class MyAmazingRocket extends OnInsertRocket {
 
 Once you pass the argument through `super(newSet)`, you can retrive the information back using the internal attribute `newSet`.
 
-* Using `super(Set<SObject>)` you have `this.newSet`
-* Using `super(Set<SObject>, Set<SObject)` you have respectively `this.newSet` and `this.oldSet`
-* Using `super(Map<ID, SObject>)` you have `this.newMap`
-* Using `super(Map<ID, SObject>, Map<ID, SObject>)` you have respectively `this.newMap` and `this.oldMap`
+- Using `super(Set<SObject>)` you have `this.newSet`
+- Using `super(Set<SObject>, Set<SObject)` you have respectively `this.newSet` and `this.oldSet`
+- Using `super(Map<ID, SObject>)` you have `this.newMap`
+- Using `super(Map<ID, SObject>, Map<ID, SObject>)` you have respectively `this.newMap` and `this.oldMap`
 
 Of course you need to set everything up on your trigger:
 
@@ -261,11 +267,97 @@ trigger AccountTrigger on Account(before insert) {
 
 `new Propellant(...).fireOff()` needs to perform some checks:
 
-* Am I being called on a trigger execution context?
-* Am I launching a rocket for the appropriate operation?
-* Does my rocket return true via `canTakeOff`? And here `propellant.tank` can be acessed!
+- Am I being called on a trigger execution context?
+- Am I launching a rocket for the appropriate operation?
+- Does my rocket return true via `canTakeOff`? And here `propellant.tank` can be acessed!
 
 Having those questions cleared, and after running the rocket's flight method, Propellant also runs `tank.consume()`, which either returns another `Tank` instance with an incremented `consumed` state or raise an `EmptyTankException` when the `consumed` amount reaches its `capacity`. Finally, `fireOff()` returns a new `Propellant` instance with the existing rockets and the more consumed instance of its tank.
 
 ## Immutability
 
+One of beauties of object oriented programming is the hability to combine objects as living things, i.e. not only cold data structures, with the predictability of state immutability.
+
+That means, objects should avoid changing its state during the course of their "lives".
+
+And that's what happens to this Apex Propellant library. For instance, you cannot change a `Tank`'s state like below:
+
+```java
+Tank t = new Tank(); // t.capacity = 5, t.consumed = 0
+t.consumed = 1; // It doesn't work as consumed setter is private
+t.capacity = 10; // It also doesn't. Same reason
+t.setConsumed(2); // It doesn't exist
+t.setCapacity(8); // Neither does it
+```
+
+But what's the problem with that? The problem is called temporal coupling, which is when one can never guarantee what the object state is when it's shared with others.
+
+```java
+Tank t1 = new Tank(); // capacity is 5
+Tank t2 = new Tank(10); // capacity is 10
+SomewhereElse.doSomething(t1, t2);
+// If Tank was mutable, this would no longer be guaranteed
+System.assert(5, t1.capacity, 'The expected capacity is 5');
+System.assert(10, t1.capacity, 'The expected capacity is 10');
+```
+
+As `Tank` is immutable (it also applies to `Propellant`, and I encourage you to do the same with your rockets), the code above is always guaranteed.
+
+Rather than changing the internal `consumed` state, `Tank.consume()` return another `Tank` instance with the mentioned attribute modified. When you call `Propellant.fireOff()` you should expect to have another `Propellant` state with the +1 consumed `Tank`.
+
+### Max execution count
+
+With `Tank`, there are a number ways you can limit how many times your rocket will repeatedly execute. Let's have a look at one of them:
+
+First, let's move away from the trigger:
+
+```java
+trigger AccountTrigger on Account(after update) {
+  LaunchSite.manageRocketLaunch(Trigger.newMap);
+}
+```
+
+Although still dealing with `static` methods, which is something I suggest you to avoid as much as you can, `LaunchSite` is more capable of controlling execution repetitions than a poor procedural trigger.
+
+Before introduce you the `LaunchSite` itself, after all this is top secret, let me show a rocket example:
+
+```java
+public class MyNotSoAmazingRocket implements OnAfterRocket {
+  private Map<ID, Account> accountMap;
+  public MyNotSoAmazingRocket(Map<ID, Account> accountMap) {
+    this.accountMap = accountMap;
+  }
+  public void flyOnAfter() {
+    List<Account> accts = [SELECT Whatever__c FROM Account WHERE Id IN :newMap.keySet()];
+    for (Account acct : accts) {
+      acct.Whatever__c = 'Whatever 🤷‍♀️';
+    }
+    update accts;
+  }
+  public Boolean canTakeOff(TriggerOperation triggerWhen, Propellant propellant) {
+    return propellant.tank.isEmpty();
+  }
+}
+```
+
+_Please don't mind the mess, this misplaced SOQL query is just for learning purposes._
+
+`MyNotSoAmazingRocket` is just a silly example of anything we want to execute every time accounts are updated. For any reason, it updates accounts again, which will end up recursively re-triggering `AccountTrigger`.
+
+As we know that, we set a limit that's basically saying, if there's any propellant left on the tank, we `canTakeOff`, otherwise don't make recursive calls indefinitely.
+
+Now let's see the `LaunchSite`
+
+```java
+public class LaunchSite {
+  private static Propellant propellant = new Propellant(
+    new MyAmazingRocket(Trigger.newMap),
+    new Tank(5)
+  );
+
+  public static void manageRocketLaunch() {
+    if (!propellant.tank.isEmpty()) {
+      propellant = propellant.fireOff();
+    }
+  }
+}
+```
