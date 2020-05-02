@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "apex-propellant",
-            "versionName": "Version 1.0.2",
-            "versionNumber": "1.0.2.NEXT"
+            "versionName": "Version 1.0.3",
+            "versionNumber": "1.0.3.NEXT"
         },
         {
             "path": "test",
@@ -19,6 +19,7 @@
         "apex-propellant": "0Ho6F000000GmscSAC",
         "apex-propellant@1.0.0-1": "04t6F000004H9bvQAC",
         "apex-propellant@1.0.1-1": "04t6F000004H9cAQAS",
-        "apex-propellant@1.0.2-1": "04t6F000004H9cFQAS"
+        "apex-propellant@1.0.2-1": "04t6F000004H9cFQAS",
+        "apex-propellant@1.0.3-1": "04t6F000004H9lOQAS"
     }
 }
