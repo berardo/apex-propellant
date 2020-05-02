@@ -138,7 +138,7 @@
               <div class="class-subtitle">
                 Signature
               </div>
-
+              <div class="class-annotations">@SuppressWarnings('PMD.EmptyStatementBlock')</div>
               <div class="class-signature">
                 public abstract class OnUndeleteRocket implements OnAfterRocket
               </div><br />Jose Berardo Cunha<br />30/04/2020
@@ -179,7 +179,7 @@
               <h3 class="subsection-title methods">OnUndeleteRocket Constructors</h3>
               <div class="methods-container">
                 <ul class="methods-toc">
-                  <li class="method private">
+                  <li class="method public">
                     <a class="methods-toc__entry " href="#OnUndeleteRocket.OnUndeleteRocket">
                       OnUndeleteRocket ()
                     </a>
@@ -204,16 +204,16 @@
                     </div>
                   </li>
                 </ul>
-                <div class="method private">
+                <div class="method public">
                   <h4 class="method-title " id="OnUndeleteRocket.OnUndeleteRocket">
                     <span>OnUndeleteRocket()</span>
                   </h4>
                   <div class="method-subtitle">
                     Signature
                   </div>
-                  <div class="method-annotations">@SuppressWarnings('PMD.EmptyStatementBlock')</div>
+
                   <div class="method-signature">
-                    private OnUndeleteRocket()
+                    public OnUndeleteRocket()
                   </div>
                 </div>
                 <div class="method public">
@@ -273,6 +273,15 @@
                       Takes the TriggerOperation to fire off on <code class="code-inline">AFTER_UNDELETE</code>
                     </div>
                   </li>
+                  <li class="method public">
+                    <a class="methods-toc__entry " href="#OnUndeleteRocket.flyOnAfter">
+                      flyOnAfter ()
+                    </a>
+
+                    <div class="methods-toc__description">
+                      Dumb implementation of OnAfterRocket
+                    </div>
+                  </li>
                 </ul>
                 <div class="method public">
                   <h4 class="method-title " id="OnUndeleteRocket.canTakeOff">
@@ -290,6 +299,9 @@
                   </div>
                   <div class="method-subtitle">Parameters</div>
                   <div class="param-name">triggerWhen</div>
+                  <div class="param-type">
+                    Type: <code class="code-inline">TriggerOperation</code>
+                  </div>
                   <div class="param-description">System.TriggerOperation</div>
                   <div class="param-name">propellant</div>
                   <div class="param-type">
@@ -301,6 +313,21 @@
                   </div>
                   <div class="method-subtitle-description">
                     <code class="code-inline">Boolean</code>
+                  </div>
+                </div>
+                <div class="method public">
+                  <h4 class="method-title " id="OnUndeleteRocket.flyOnAfter">
+                    <span>flyOnAfter()</span>
+                  </h4>
+                  <div class="method-description">
+                    Dumb implementation of OnAfterRocket
+                  </div>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    public virtual void flyOnAfter()
                   </div>
                 </div>
               </div>

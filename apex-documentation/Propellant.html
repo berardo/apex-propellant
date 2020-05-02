@@ -267,6 +267,18 @@
                     </a>
 
                   </li>
+                  <li class="method private">
+                    <a class="methods-toc__entry " href="#Propellant.Propellant_8">
+                      Propellant ()
+                    </a>
+
+                  </li>
+                  <li class="method private">
+                    <a class="methods-toc__entry " href="#Propellant.Propellant_9">
+                      Propellant ()
+                    </a>
+
+                  </li>
                 </ul>
                 <div class="method public">
                   <h4 class="method-title " id="Propellant.Propellant">
@@ -423,7 +435,7 @@
                   </div>
 
                   <div class="method-signature">
-                    return new Propellant(beforeRocket, tank.consume())
+                    ? new Propellant(beforeRocket, tank.consume())
                   </div>
                 </div>
                 <div class="method private">
@@ -435,7 +447,31 @@
                   </div>
 
                   <div class="method-signature">
-                    return new Propellant(afterRocket, tank.consume())
+                    : new Propellant(beforeRocket, afterRocket, tank.consume())
+                  </div>
+                </div>
+                <div class="method private">
+                  <h4 class="method-title " id="Propellant.Propellant_8">
+                    <span>Propellant()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    ? new Propellant(afterRocket, tank.consume())
+                  </div>
+                </div>
+                <div class="method private">
+                  <h4 class="method-title " id="Propellant.Propellant_9">
+                    <span>Propellant()</span>
+                  </h4>
+                  <div class="method-subtitle">
+                    Signature
+                  </div>
+
+                  <div class="method-signature">
+                    : new Propellant(beforeRocket, afterRocket, tank.consume())
                   </div>
                 </div>
               </div>
