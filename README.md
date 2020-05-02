@@ -88,7 +88,7 @@ The bare minimum code you write to make the trigger above thrust your rocket up 
 
 ```java
 public class MyAmazingRocket extends OnInsertRocket {
-  public void flyOnBefore() {
+  public override void flyOnBefore() {
     System.debug('Yay, my 🚀 has gone through the ⛅️ on its way to the ✨');
   }
 }
@@ -224,7 +224,7 @@ public class MyAmazingRocket extends OnInsertRocket {
   public MyAmazingRocket(Set<SObject> newSet) {
     super(newSet);
   }
-  public void flyOnBefore() {
+  public override void flyOnBefore() {
     System.debug('Yay, my 🚀 has gone through the ⛅️ on its way to the ✨');
     System.debug('See my first record ID: ' + this.newSet.get(0).Id);
   }

@@ -36,10 +36,7 @@ public class OnUndeleteRocketTest {
     public OnUndeleteRocketImpl(Map<ID, SObject> newMap) {
       super(newMap);
     }
-    public void flyOnBefore() {
-      System.debug('Test');
-    }
-    public void flyOnAfter() {
+    public override void flyOnAfter() {
       System.debug('Test');
     }
     public Set<SObject> exposeSet() {

@@ -64,10 +64,10 @@ public class OnUpdateRocketTest {
     public OnUpdateRocketImpl(Map<ID, SObject> newMap, Map<ID, SObject> oldMap) {
       super(newMap, oldMap);
     }
-    public void flyOnBefore() {
+    public override void flyOnBefore() {
       System.debug('Test');
     }
-    public void flyOnAfter() {
+    public override void flyOnAfter() {
       System.debug('Test');
     }
     public Set<SObject> exposeNewSet() {

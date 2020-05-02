@@ -40,10 +40,10 @@ public class OnInsertRocketTest {
     public OnInsertRocketImpl(Map<ID, SObject> newMap) {
       super(newMap);
     }
-    public void flyOnBefore() {
+    public override void flyOnBefore() {
       System.debug('Test');
     }
-    public void flyOnAfter() {
+    public override void flyOnAfter() {
       System.debug('Test');
     }
     public Set<SObject> exposeSet() {

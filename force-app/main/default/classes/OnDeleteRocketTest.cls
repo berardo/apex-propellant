@@ -40,10 +40,10 @@ public class OnDeleteRocketTest {
     public OnDeleteRocketImpl(Map<ID, SObject> oldMap) {
       super(oldMap);
     }
-    public void flyOnBefore() {
+    public override void flyOnBefore() {
       System.debug('Test');
     }
-    public void flyOnAfter() {
+    public override void flyOnAfter() {
       System.debug('Test');
     }
     public Set<SObject> exposeSet() {
