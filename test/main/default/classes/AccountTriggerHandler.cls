@@ -1,9 +1,9 @@
 public with sharing class AccountTriggerHandler extends OnInsertRocket {
-  public AccountTriggerHandler(Set<SObject> newSet) {
-    super(newSet);
+  public AccountTriggerHandler(List<SObject> newList) {
+    super(newList);
   }
   public override void flyOnBefore() {
-    for (SObject obj : newSet) {
+    for (SObject obj : newList) {
       Account acct = (Account) obj;
       if (acct.BillingCity == null || acct.BillingCity.trim() == '') {
         acct.BillingCity = 'Sydney';
@@ -12,7 +12,7 @@ public with sharing class AccountTriggerHandler extends OnInsertRocket {
   }
   public override void flyOnAfter() {
     Set<ID> acctIds = new Set<ID>();
-    for (SObject obj : newSet) {
+    for (SObject obj : newList) {
       acctIds.add(obj.Id);
     }
     if (Schema.sObjectType.Contact.isAccessible() && Schema.sObjectType.Contact.isCreateable()) {

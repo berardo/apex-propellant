@@ -2,18 +2,18 @@
 public class OnUpdateRocketTest {
   @isTest
   public static void testSetConstructor() {
-    Set<SObject> newSet = new Set<SObject>();
-    OnUpdateRocketImpl rocket = new OnUpdateRocketImpl(newSet);
-    System.assertEquals(newSet, rocket.exposeNewSet(), 'newSet not properly assigned');
+    List<SObject> newList = new List<SObject>();
+    OnUpdateRocketImpl rocket = new OnUpdateRocketImpl(newList);
+    System.assertEquals(newList, rocket.exposeNewSet(), 'newList not properly assigned');
   }
 
   @isTest
   public static void testSetConstructors() {
-    Set<SObject> newSet = new Set<SObject>();
-    Set<SObject> oldSet = new Set<SObject>();
-    OnUpdateRocketImpl rocket = new OnUpdateRocketImpl(newSet, oldSet);
-    System.assertEquals(newSet, rocket.exposeNewSet(), 'newSet not properly assigned');
-    System.assertEquals(oldSet, rocket.exposeOldSet(), 'oldSet not properly assigned');
+    List<SObject> newList = new List<SObject>();
+    List<SObject> oldList = new List<SObject>();
+    OnUpdateRocketImpl rocket = new OnUpdateRocketImpl(newList, oldList);
+    System.assertEquals(newList, rocket.exposeNewSet(), 'newList not properly assigned');
+    System.assertEquals(oldList, rocket.exposeOldSet(), 'oldList not properly assigned');
   }
 
   @isTest
@@ -34,8 +34,8 @@ public class OnUpdateRocketTest {
 
   @isTest
   public static void testCanFire() {
-    Set<SObject> newSet = new Set<SObject>();
-    OnUpdateRocketImpl rocket = new OnUpdateRocketImpl(newSet);
+    List<SObject> newList = new List<SObject>();
+    OnUpdateRocketImpl rocket = new OnUpdateRocketImpl(newList);
     System.assert(
       rocket.canTakeOff(TriggerOperation.BEFORE_UPDATE, null),
       'Can Fire on before update'
@@ -52,11 +52,11 @@ public class OnUpdateRocketTest {
   }
 
   class OnUpdateRocketImpl extends OnUpdateRocket {
-    public OnUpdateRocketImpl(Set<SObject> newSet) {
-      super(newSet);
+    public OnUpdateRocketImpl(List<SObject> newList) {
+      super(newList);
     }
-    public OnUpdateRocketImpl(Set<SObject> newSet, Set<SObject> oldSet) {
-      super(newSet, oldSet);
+    public OnUpdateRocketImpl(List<SObject> newList, List<SObject> oldList) {
+      super(newList, oldList);
     }
     public OnUpdateRocketImpl(Map<ID, SObject> newMap) {
       super(newMap);
@@ -70,11 +70,11 @@ public class OnUpdateRocketTest {
     public override void flyOnAfter() {
       System.debug('Test');
     }
-    public Set<SObject> exposeNewSet() {
-      return newSet;
+    public List<SObject> exposeNewSet() {
+      return newList;
     }
-    public Set<SObject> exposeOldSet() {
-      return oldSet;
+    public List<SObject> exposeOldSet() {
+      return oldList;
     }
     public Map<ID, SObject> exposeNewMap() {
       return newMap;

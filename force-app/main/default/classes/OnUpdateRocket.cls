@@ -5,8 +5,8 @@
  */
 @SuppressWarnings('PMD.EmptyStatementBlock')
 public abstract class OnUpdateRocket implements OnBeforeRocket, OnAfterRocket {
-  protected Set<SObject> newSet { get; private set; }
-  protected Set<SObject> oldSet { get; private set; }
+  protected List<SObject> newList { get; private set; }
+  protected List<SObject> oldList { get; private set; }
   protected Map<ID, SObject> newMap { get; private set; }
   protected Map<ID, SObject> oldMap { get; private set; }
 
@@ -15,20 +15,20 @@ public abstract class OnUpdateRocket implements OnBeforeRocket, OnAfterRocket {
 
   /**
    * Creates an OnUpdateRocket with a Set of Objects
-   * @param newSet Set of SObjects expected to be passed (e.g. Trigger.new)
+   * @param newList Set of SObjects expected to be passed (e.g. Trigger.new)
    */
-  public OnUpdateRocket(Set<SObject> newSet) {
-    this(newSet, null);
+  public OnUpdateRocket(List<SObject> newList) {
+    this(newList, null);
   }
 
   /**
    * Creates an OnUpdateRocket with two Set of Objects
-   * @param newSet Set of SObjects expected to be passed (e.g. Trigger.new)
-   * @param oldSet Set of SObjects expected to be passed (e.g. Trigger.old)
+   * @param newList Set of SObjects expected to be passed (e.g. Trigger.new)
+   * @param oldList Set of SObjects expected to be passed (e.g. Trigger.old)
    */
-  public OnUpdateRocket(Set<SObject> newSet, Set<SObject> oldSet) {
-    this.newSet = newSet;
-    this.oldSet = oldSet;
+  public OnUpdateRocket(List<SObject> newList, List<SObject> oldList) {
+    this.newList = newList;
+    this.oldList = oldList;
   }
 
   /**

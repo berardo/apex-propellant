@@ -5,7 +5,7 @@
  */
 @SuppressWarnings('PMD.EmptyStatementBlock')
 public abstract class OnInsertRocket implements OnBeforeRocket, OnAfterRocket {
-  protected Set<SObject> newSet { get; private set; }
+  protected List<SObject> newList { get; private set; }
   protected Map<ID, SObject> newMap { get; private set; }
 
   public OnInsertRocket() {
@@ -13,10 +13,10 @@ public abstract class OnInsertRocket implements OnBeforeRocket, OnAfterRocket {
 
   /**
    * Creates an OnInsertRocket with a Set of Objects
-   * @param newSet Set of SObjects expected to be passed (e.g. Trigger.new)
+   * @param newList Set of SObjects expected to be passed (e.g. Trigger.new)
    */
-  public OnInsertRocket(Set<SObject> newSet) {
-    this.newSet = newSet;
+  public OnInsertRocket(List<SObject> newList) {
+    this.newList = newList;
   }
 
   /**

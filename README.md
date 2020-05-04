@@ -221,20 +221,20 @@ You might be missing the collections of saved or deleted records found in `Trigg
 
 ```java
 public class MyAmazingRocket extends OnInsertRocket {
-  public MyAmazingRocket(Set<SObject> newSet) {
-    super(newSet);
+  public MyAmazingRocket(List<SObject> newList) {
+    super(newList);
   }
   public override void flyOnBefore() {
     System.debug('Yay, my 🚀 has gone through the ⛅️ on its way to the ✨');
-    System.debug('See my first record ID: ' + this.newSet.get(0).Id);
+    System.debug('See my first record ID: ' + this.newList.get(0).Id);
   }
 }
 ```
 
-Once you pass the argument through `super(newSet)`, you can retrive the information back using the internal attribute `newSet`.
+Once you pass the argument through `super(newList)`, you can retrive the information back using the internal attribute `newList`.
 
-- Using `super(Set<SObject>)` you have `this.newSet`
-- Using `super(Set<SObject>, Set<SObject)` you have respectively `this.newSet` and `this.oldSet`
+- Using `super(List<SObject>)` you have `this.newList`
+- Using `super(List<SObject>, Set<SObject)` you have respectively `this.newList` and `this.oldList`
 - Using `super(Map<ID, SObject>)` you have `this.newMap`
 - Using `super(Map<ID, SObject>, Map<ID, SObject>)` you have respectively `this.newMap` and `this.oldMap`
 

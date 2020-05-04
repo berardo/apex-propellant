@@ -2,9 +2,9 @@
 public class OnDeleteRocketTest {
   @isTest
   public static void testSetConstructor() {
-    Set<SObject> oldSet = new Set<SObject>();
-    OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldSet);
-    System.assertEquals(oldSet, rocket.exposeSet(), 'oldSet not properly assigned');
+    List<SObject> oldList = new List<SObject>();
+    OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldList);
+    System.assertEquals(oldList, rocket.exposeSet(), 'oldList not properly assigned');
   }
 
   @isTest
@@ -16,8 +16,8 @@ public class OnDeleteRocketTest {
 
   @isTest
   public static void testCanFire() {
-    Set<SObject> oldSet = new Set<SObject>();
-    OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldSet);
+    List<SObject> oldList = new List<SObject>();
+    OnDeleteRocketImpl rocket = new OnDeleteRocketImpl(oldList);
     System.assert(
       rocket.canTakeOff(TriggerOperation.BEFORE_DELETE, null),
       'Can Fire on before delete'
@@ -34,8 +34,8 @@ public class OnDeleteRocketTest {
   }
 
   class OnDeleteRocketImpl extends OnDeleteRocket {
-    public OnDeleteRocketImpl(Set<SObject> oldSet) {
-      super(oldSet);
+    public OnDeleteRocketImpl(List<SObject> oldList) {
+      super(oldList);
     }
     public OnDeleteRocketImpl(Map<ID, SObject> oldMap) {
       super(oldMap);
@@ -46,8 +46,8 @@ public class OnDeleteRocketTest {
     public override void flyOnAfter() {
       System.debug('Test');
     }
-    public Set<SObject> exposeSet() {
-      return oldSet;
+    public List<SObject> exposeSet() {
+      return oldList;
     }
     public Map<ID, SObject> exposeMap() {
       return oldMap;

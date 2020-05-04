@@ -5,7 +5,7 @@
  */
 @SuppressWarnings('PMD.EmptyStatementBlock')
 public abstract class OnDeleteRocket implements OnBeforeRocket, OnAfterRocket {
-  protected Set<SObject> oldSet { get; private set; }
+  protected List<SObject> oldList { get; private set; }
   protected Map<ID, SObject> oldMap { get; private set; }
 
   public OnDeleteRocket() {
@@ -13,10 +13,10 @@ public abstract class OnDeleteRocket implements OnBeforeRocket, OnAfterRocket {
 
   /**
    * Creates an OnDeleteRocket with a Set of Objects
-   * @param oldSet Set of SObjects expected to be passed (e.g. Trigger.old)
+   * @param oldList Set of SObjects expected to be passed (e.g. Trigger.old)
    */
-  public OnDeleteRocket(Set<SObject> oldSet) {
-    this.oldSet = oldSet;
+  public OnDeleteRocket(List<SObject> oldList) {
+    this.oldList = oldList;
   }
 
   /**

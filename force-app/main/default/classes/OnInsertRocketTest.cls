@@ -2,9 +2,9 @@
 public class OnInsertRocketTest {
   @isTest
   public static void testSetConstructor() {
-    Set<SObject> newSet = new Set<SObject>();
-    OnInsertRocketImpl rocket = new OnInsertRocketImpl(newSet);
-    System.assertEquals(newSet, rocket.exposeSet(), 'newSet not properly assigned');
+    List<SObject> newList = new List<SObject>();
+    OnInsertRocketImpl rocket = new OnInsertRocketImpl(newList);
+    System.assertEquals(newList, rocket.exposeSet(), 'newList not properly assigned');
   }
 
   @isTest
@@ -16,8 +16,8 @@ public class OnInsertRocketTest {
 
   @isTest
   public static void testCanFire() {
-    Set<SObject> newSet = new Set<SObject>();
-    OnInsertRocketImpl rocket = new OnInsertRocketImpl(newSet);
+    List<SObject> newList = new List<SObject>();
+    OnInsertRocketImpl rocket = new OnInsertRocketImpl(newList);
     System.assert(
       rocket.canTakeOff(TriggerOperation.BEFORE_INSERT, null),
       'Can Fire on before insert'
@@ -34,8 +34,8 @@ public class OnInsertRocketTest {
   }
 
   class OnInsertRocketImpl extends OnInsertRocket {
-    public OnInsertRocketImpl(Set<SObject> newSet) {
-      super(newSet);
+    public OnInsertRocketImpl(List<SObject> newList) {
+      super(newList);
     }
     public OnInsertRocketImpl(Map<ID, SObject> newMap) {
       super(newMap);
@@ -46,8 +46,8 @@ public class OnInsertRocketTest {
     public override void flyOnAfter() {
       System.debug('Test');
     }
-    public Set<SObject> exposeSet() {
-      return newSet;
+    public List<SObject> exposeSet() {
+      return newList;
     }
     public Map<ID, SObject> exposeMap() {
       return newMap;
