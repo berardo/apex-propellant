@@ -30,9 +30,9 @@
  * @since 30/04/2020
  */
 public with sharing class Propellant {
-  public OnBeforeRocket beforeRocket { get; private set; }
-  public OnAfterRocket afterRocket { get; private set; }
-  public Tank tank { get; private set; }
+  public final OnBeforeRocket beforeRocket { get; private set; }
+  public final OnAfterRocket afterRocket { get; private set; }
+  public final Tank tank { get; private set; }
 
   @TestVisible
   private Boolean skipForTestingPurposes = false;

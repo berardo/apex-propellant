@@ -5,8 +5,8 @@
  * @see Propellant
  */
 public class Tank {
-  public Integer capacity { get; private set; }
-  public Integer consumed { get; private set; }
+  public final Integer capacity { get; private set; }
+  public final Integer consumed { get; private set; }
 
   /**
    * Creates a tank with defined capacity and consumed amount

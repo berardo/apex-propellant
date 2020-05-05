@@ -5,8 +5,8 @@
  */
 @SuppressWarnings('PMD.EmptyStatementBlock')
 public abstract class OnUndeleteRocket implements OnAfterRocket {
-  protected List<SObject> newList { get; private set; }
-  protected Map<ID, SObject> newMap { get; private set; }
+  protected final List<SObject> newList { get; private set; }
+  protected final Map<ID, SObject> newMap { get; private set; }
 
   public OnUndeleteRocket() {
   }
