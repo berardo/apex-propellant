@@ -39,22 +39,52 @@ An _Elegant Object_ oriented alternative solution for Apex trigger handling. It'
 
 It's well known that triggers should be logicless, which means we should avoid coding directly within them. Instead, it's advisable to make calls to business classes not rarely called trigger handlers.
 
-However, what's commonly overlooked is the dependency from the handler back to the Apex `Trigger` object.
+However, what's commonly overlooked is the dependency from the handler back to the Apex `Trigger` object and some other issues I'm going to discuss on this overview (feel free to jump onto the next session if want to cut to the chase).
 
-The Apex Propellant library is inspired by a popular solution called [`TriggerHandler`](https://github.com/kevinohara80/sfdc-trigger-framework), a common generic class that can be extended to override methods like `beforeInsert()` or `afterUpdate()`, so that these methods are executed when triggers call something like:
+The Apex Propellant library is inspired by probably the most popular Apex trigger handling solutions out there.
+
+The first two are this [TriggerHandler](https://github.com/kevinohara80/sfdc-trigger-framework), and this pretty basic [TriggerHandler](https://github.com/xgeek-net/sfdc-apex-trigger-framework).
+
+Both are based upon common generic classes that you extended in order to implement you very own `TriggerHandler`. When you extend it, you override methods like `beforeInsert()` or `afterUpdate()`, so that these methods are executed when triggers call something like the code below:
 
 ```java
-new MyBeautifulClassThatExtendsTriggerHandler().run();
+trigger AccountTrigger on Account(before insert, after insert) {
+  // Kevin O'Hara's TriggerHandler
+  // the methods MyBeautifulClassThatExtendsTriggerHandler.beforeUpdate
+  // and MyBeautifulClassThatExtendsTriggerHandler.afterUpdate will be called
+  // on respectively before and after insert trigger events
+  new MyBeautifulClassThatExtendsTriggerHandler().run();
+}
+```
+or
+```java
+trigger AccountTrigger on Account(before insert, after insert) {
+  // Xiaoan Lin's TriggerHandler
+  // Pretty much the same idea, however, it's slightly more verbose, 
+  // while it's also a bit more cohesive
+  TriggerHandlerManager handlerManager = new TriggerHandlerManager();
+  handlerManager.add( new MyBeautifulClassThatExtendsTriggerHandler() );
+  handlerManager.run();
+}
 ```
 
-However, while I agree this is an easy way to shift complex logics away from triggers, it doesn't bring much benefit as the handler still needs to deal with `Trigger.new`, `Trigger.old` and so on. This unwated dependency makes handler as not unit testable as triggers themselves.
+I do agree those are easy ways to shift complex logic away from triggers, but the main drawback is the fact that their trigger handlers still need to deal with `Trigger.new`, `Trigger.old` and so on. This unwated dependency makes handlers as not unit testable as triggers themselves.
 
-On the other hand, **Apex Propellant** is a simple alternative targeting the same goal but also:
+Other libraries like the [Nebula Framework for Salesforce](https://github.com/jongpie/NebulaFramework), with its abstract class `SObjectTriggerHandler`, and the [Lightweight Apex Trigger Framework](http://chrisaldridge.com/triggers/lightweight-apex-trigger-framework/), with its interface `ITriggerHandler`, solve the `Trigger` dependency with methods like `executeBeforeUpdate` or `executeAfterUpdate` (the former) and `beforeInsert` or `afterInsert` (the latter) receiving parameters. However, as well as the previous two, they still suggest monolithic handlers with at least dummy implementations of all 7 trigger event methods. By the way, monoliths sooner or later lead to [situations](https://github.com/kevinohara80/sfdc-trigger-framework/pull/29) where features hardly used are implemented in a way that impacts your code most of the time.
 
-- Decoupling handlers from triggers and `System.Trigger`, allowing them to be tested in isolation
-- Promoting an easy, truly object oriented API
-- Promoting the usage of [immutable objects](https://en.wikipedia.org/wiki/Immutable_object)
-- Giving you control over handler call repetitions and bypasses
+It's worth noting that triggers are different from any other Apex entry point (e.g. schedulable, aura controllers, invocable methods, rest endpoints, etc). While all other entry points normally have clear purposes and exist for very specific requirements, triggers are invoked whenever the `SObject` is manipulated on the database. That certainly leads to logic for absolutely separate purposes _triggered_ by the same database event on the same custom or standard Salesforce object. For instance, how many distinct requirements you have to address whenever an Account, a Lead or an Opportunity is inserted or updated?
+
+Finally, I'd also like to mention the Domain Layer of [Apex Enterprise Patterns](https://github.com/apex-enterprise-patterns/fflib-apex-common), which falls under the same second category introduced above, whith the aggravating factor of suggesting declarations of other business methods associated to the same `SObjects` within the same (God) classes. In other words, despite promoting separation of concerns with at least three different layers (Domain, Service and Selector), the enterprise patterns, not surprisingly, made the Domain Layer the most intricate of the three.
+
+
+**Apex Propellant**, on the other hand, is a simple alternative which targets the same goal (shift logic away from poor procedural triggers), but also:
+
+- Decouples handlers from triggers and `System.Trigger`, allowing them to be tested in isolation
+- Promotes an easy, cohesive, and truly object oriented API, where you don't implement unnecessary methods
+- Promotes the usage of [immutable objects](https://en.wikipedia.org/wiki/Immutable_object)
+- Gives you full control over handler call repetitions (or recursions) and bypasses
+
+Before we move on, I'd like to say there's nothing stopping you from using **Apex Propellant** along with your TriggerHandler of choice. As triggers are limited procedural constructions necessary to spark your `Rocket`s, which are small cohesive objects serving clear specific purposes, TriggerHandlers might look like good adapters between the two worlds. So feel free to pick and choose the easiest one or make it up yourself.
 
 ## How it works
 
@@ -154,14 +184,14 @@ There's only one little thing to change when your rocket wants to take off twice
 
 ```java
 trigger AccountTrigger on Account(before insert, after insert) {
-  OnBeforeRocket rocket = new MyAmazingRocket(); // 5, 4, 3, 2, 1 ...
-  new Propellant(rocket, rocket).fireOff(); // Can you hear the sound? 🚀
+  Rocket rocket = new MyAmazingRocket(); // 5, 4, 3, 2, 1 ...
+  new Propellant((OnBeforeRocket)rocket, (OnAfterRocket)rocket).fireOff();
 }
 ```
 
-If you didn't spot the difference, now we passed the same rocket instance twice.
+As you can see, we now passed the same rocket instance twice.
 
-I think you got the point. So let's move on to the Rocket hierarchy and finally expain the little `canTakeOff` kid.
+I think you got the point. So let's move on to the Rocket hierarchy and finally explain the little `canTakeOff` kid.
 
 ## The Rocket Hierarchy
 
