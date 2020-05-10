@@ -37,15 +37,15 @@ An _Elegant Object_ oriented alternative solution for Apex trigger handling. It'
 
 ## Overview
 
-It's well known that triggers should be logicless, which means we should avoid coding directly within them. Instead, it's advisable to make calls to business classes not rarely called trigger handlers.
+It's well known that triggers should be logicless, which means we should avoid coding directly within them. Instead, it's advisable to make calls to business classes commonly called trigger handlers.
 
 However, what's commonly overlooked is the dependency from the handler back to the Apex `Trigger` object and some other issues I'm going to discuss on this overview (feel free to jump onto the next session if want to cut to the chase).
 
-The Apex Propellant library is inspired by probably the most popular Apex trigger handling solutions out there.
+The **Apex Propellant** library is inspired by probably the most popular Apex trigger handling solutions out there.
 
 The first two are this [TriggerHandler](https://github.com/kevinohara80/sfdc-trigger-framework), and this pretty basic [TriggerHandler](https://github.com/xgeek-net/sfdc-apex-trigger-framework).
 
-Both are based upon common generic classes that you extended in order to implement you very own `TriggerHandler`. When you extend it, you override methods like `beforeInsert()` or `afterUpdate()`, so that these methods are executed when triggers call something like the code below:
+Both are based upon common generic classes that you extend in order to implement you very own `TriggerHandler`. When you extend it, you override methods like `beforeInsert()` or `afterUpdate()`, so that these methods are executed when triggers call something like the code below:
 
 ```java
 trigger AccountTrigger on Account(before insert, after insert) {
@@ -309,7 +309,7 @@ One of beauties of object oriented programming is the hability to combine object
 
 That means, objects should avoid changing their state during the course of their "lives".
 
-And that's what happens to this Apex Propellant library. For instance, you cannot change a `Tank`'s state like below:
+And that's what happens to this **Apex Propellant** library. For instance, you cannot change a `Tank`'s state like below:
 
 ```java
 Tank t = new Tank(); // t.capacity = 5, t.consumed = 0
