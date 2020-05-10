@@ -39,13 +39,13 @@ public abstract class OnInsertRocket implements OnBeforeRocket, OnAfterRocket {
   }
 
   /**
-   * Dumb implementation of OnBeforeRocket
+   * Dummy implementation of OnBeforeRocket
    */
   public virtual void flyOnBefore() {
   }
 
   /**
-   * Dumb implementation of OnAfterRocket
+   * Dummy implementation of OnAfterRocket
    */
   public virtual void flyOnAfter() {
   }

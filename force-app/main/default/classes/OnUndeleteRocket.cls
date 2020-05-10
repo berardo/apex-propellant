@@ -38,7 +38,7 @@ public abstract class OnUndeleteRocket implements OnAfterRocket {
   }
 
   /**
-   * Dumb implementation of OnAfterRocket
+   * Dummy implementation of OnAfterRocket
    */
   public virtual void flyOnAfter() {
   }
