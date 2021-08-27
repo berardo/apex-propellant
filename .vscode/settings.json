@@ -4,5 +4,9 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "salesforcedx-vscode-core.retrieve-test-code-coverage": true
+  "salesforcedx-vscode-core.retrieve-test-code-coverage": true,
+  "salesforcedx-vscode-apex.enable-semantic-errors": true,
+  "salesforcedx-vscode-core.detectConflictsAtSync": true,
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home"
 }
