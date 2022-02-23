@@ -29,9 +29,6 @@ An _Elegant Object_ oriented alternative solution for Apex trigger handling. It'
        .
 ```
 
-**Deploy to SFDX Scratch Org:**
-[![Deploy to SFDX](https://deploy-to-sfdx.com/dist/assets/images/DeployToSFDX.svg)](https://deploy-to-sfdx.com)
-
 **Deploy to Salesforce Org:**
 [![Deploy to Salesforce](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png)](https://githubsfdeploy.herokuapp.com/?owner=berardo&repo=apex-propellant&ref=master)
 
@@ -167,7 +164,7 @@ public class MyAmazingRocket implements OnAfterRocket {
 I know, I know ... you can have both:
 
 ```java
-public class MyAmazingRocket implements OnAfterRocket {
+public class MyAmazingRocket implements OnBeforeRocket, OnAfterRocket {
   public void flyOnBefore() {
     System.debug('Yay, my 🚀 has gone through the ⛅️ on its way to the ✨');
   }
