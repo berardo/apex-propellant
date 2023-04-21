@@ -201,7 +201,7 @@ public interface Rocket {
 
 ```
 
-`canTakeOff` gives you the hability to decide whether your rocket will fly or not. The `Propellant` object always asks whether your rocket is ready or not and passes a `System.TriggerOperation` representing the trigger moment, and also its own state in case you need it (we'll see more on this further down when we discuss the rocket `Tank`).
+`canTakeOff` gives you the ability to decide whether your rocket will fly or not. The `Propellant` object always asks whether your rocket is ready or not and passes a `System.TriggerOperation` representing the trigger moment, and also its own state in case you need it (we'll see more on this further down when we discuss the rocket `Tank`).
 
 On the trigger example above, `Propellant` would run something like this: `rocket.canTakeOff(TriggerOperation.BEFORE_INSERT, this);` and would move on only if this call returns `true`.
 
@@ -261,7 +261,7 @@ public class MyAmazingRocket extends OnInsertRocket {
 Once you pass the argument through `super(newList)`, you can retrive the information back using the internal attribute `newList`.
 
 - Using `super(List<SObject>)` you have `this.newList`
-- Using `super(List<SObject>, Set<SObject)` you have respectively `this.newList` and `this.oldList`
+- Using `super(List<SObject>, List<SObject)` you have respectively `this.newList` and `this.oldList`
 - Using `super(Map<ID, SObject>)` you have `this.newMap`
 - Using `super(Map<ID, SObject>, Map<ID, SObject>)` you have respectively `this.newMap` and `this.oldMap`
 
@@ -302,7 +302,7 @@ Having those questions cleared, and after running the rocket's flight method, Pr
 
 ## Immutability
 
-One of beauties of object oriented programming is the hability to combine objects as living things, i.e. not only cold data structures, with the predictability of state immutability.
+One of beauties of object oriented programming is the ability to combine objects as living things, i.e. not only cold data structures, with the predictability of state immutability.
 
 That means, objects should avoid changing their state during the course of their "lives".
 
